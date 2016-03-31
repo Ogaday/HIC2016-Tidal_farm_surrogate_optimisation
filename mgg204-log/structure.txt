@@ -1,0 +1,24 @@
+.
+  |-mgg204-2.1.1
+  |  |-applications
+  |  |  |-solvers
+  |  |  |  |-TInterFoam
+  |  |-swak4foam
+  |  |-run
+  |  |  |-postdoc
+  |  |  |  |-michele
+  |  |  |  |  |-staggered
+  |  |  |  |  |  |-Ogaday1
+  |  |  |  |  |-applications
+  |  |  |  |  |  |-solvers
+  |  |  |  |  |  |  |-TInterFoam
+  |  |  |  |  |-swak4foam
+  |  |  |-ogaday
+  |  |  |  |-staggered
+  |  |-wow202-2.1.1
+  |  |  |-applications
+  |  |  |  |-solvers
+  |  |  |  |  |-TInterFoam
+  |  |  |-swak4foam
+  |  |  |-run
+  |  |  |  |-staggered
