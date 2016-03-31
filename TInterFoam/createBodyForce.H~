@@ -1,0 +1,4011 @@
+Info<< "Creating body force" << endl;
+
+// Allocate the body force vector field of the upstream turbines and initialize it to zero
+//volVectorField bodyForce
+//(
+//IOobject
+//(
+//"bodyForce",
+//runTime.timeName(),
+//mesh,
+//IOobject::NO_READ
+//),
+//mesh,
+//dimensionedVector("zero",
+//dimForce/dimVolume,
+//vector::zero)
+//);
+// Allocate the body force vector field of the upstream turbines and initialize it to zero
+volVectorField bodyForce1
+(
+IOobject
+(
+"bodyForce1",
+runTime.timeName(),
+mesh,
+IOobject::NO_READ
+),
+mesh,
+dimensionedVector("zero",
+dimForce/dimVolume,
+vector::zero)
+);
+// Allocate the body force vector field of the middle turbines and initialize it to zero
+volVectorField bodyForce2
+(
+IOobject
+(
+"bodyForce2",
+runTime.timeName(),
+mesh,
+IOobject::NO_READ
+),
+mesh,
+dimensionedVector("zero",
+dimForce/dimVolume,
+vector::zero)
+);
+// Allocate the body force vector field of the downstream turbines and initialize it to zero
+volVectorField bodyForce3
+(
+IOobject
+(
+"bodyForce3",
+runTime.timeName(),
+mesh,
+IOobject::NO_READ
+),
+mesh,
+dimensionedVector("zero",
+dimForce/dimVolume,
+vector::zero)
+);
+
+// Allocate the body force vector field of the downstream turbines and initialize it to zero
+volVectorField bodyForce4
+(
+IOobject
+(
+"bodyForce4",
+runTime.timeName(),
+mesh,
+IOobject::NO_READ
+),
+mesh,
+dimensionedVector("zero",
+dimForce/dimVolume,
+vector::zero)
+);
+
+// Allocate the body force vector field of the downstream turbines and initialize it to zero
+volVectorField bodyForce5
+(
+IOobject
+(
+"bodyForce5",
+runTime.timeName(),
+mesh,
+IOobject::NO_READ
+),
+mesh,
+dimensionedVector("zero",
+dimForce/dimVolume,
+vector::zero)
+);
+
+//Info<< "Creating ring force" << endl;
+
+// Allocate the ring force vector field and initialize it to zero
+//volVectorField ringForce
+//(
+//IOobject
+//(
+//"ringForce",
+//runTime.timeName(),
+//mesh,
+//IOobject::NO_READ
+//),
+//mesh,
+//dimensionedVector("zero",
+//dimForce/dimVolume,
+//vector::zero)
+//);
+
+// Read a dictionary to configure the body force
+IOdictionary bodyForceDict
+(
+IOobject
+(
+"bodyForceDict",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+
+IOdictionary bodyForceDict1
+(
+IOobject
+(
+"bodyForceDict1",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+
+IOdictionary bodyForceDict2
+(
+IOobject
+(
+"bodyForceDict2",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+IOdictionary bodyForceDict3
+(
+IOobject
+(
+"bodyForceDict3",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+IOdictionary bodyForceDict4
+(
+IOobject
+(
+"bodyForceDict4",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+IOdictionary bodyForceDict5
+(
+IOobject
+(
+"bodyForceDict5",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+IOdictionary bodyForceDict6
+(
+IOobject
+(
+"bodyForceDict6",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+IOdictionary bodyForceDict7
+(
+IOobject
+(
+"bodyForceDict7",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+IOdictionary bodyForceDict8
+(
+IOobject
+(
+"bodyForceDict8",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+IOdictionary bodyForceDict9
+(
+IOobject
+(
+"bodyForceDict9",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+IOdictionary bodyForceDict10
+(
+IOobject
+(
+"bodyForceDict10",
+runTime.time().constant(),
+runTime,
+IOobject::MUST_READ,
+IOobject::NO_WRITE
+)
+);
+
+// Define the rectangular region for the body force from dictionary values
+//First row of Turbines
+const scalar xminC1 (readScalar(bodyForceDict.lookup("xminC1")));
+const scalar xmaxC1 (readScalar(bodyForceDict.lookup("xmaxC1")));
+const scalar yminC1 (readScalar(bodyForceDict.lookup("yminC1")));
+const scalar ymaxC1 (readScalar(bodyForceDict.lookup("ymaxC1")));
+
+const scalar xmin1C1 (readScalar(bodyForceDict1.lookup("xmin1C1")));
+const scalar xmax1C1 (readScalar(bodyForceDict1.lookup("xmax1C1")));
+const scalar ymin1C1 (readScalar(bodyForceDict1.lookup("ymin1C1")));
+const scalar ymax1C1 (readScalar(bodyForceDict1.lookup("ymax1C1")));
+const scalar xmin11C1 (readScalar(bodyForceDict1.lookup("xmin11C1")));
+const scalar xmax11C1 (readScalar(bodyForceDict1.lookup("xmax11C1")));
+const scalar ymin11C1 (readScalar(bodyForceDict1.lookup("ymin11C1")));
+const scalar ymax11C1 (readScalar(bodyForceDict1.lookup("ymax11C1")));
+const scalar xmin12C1 (readScalar(bodyForceDict1.lookup("xmin12C1")));
+const scalar xmax12C1 (readScalar(bodyForceDict1.lookup("xmax12C1")));
+const scalar ymin12C1 (readScalar(bodyForceDict1.lookup("ymin12C1")));
+const scalar ymax12C1 (readScalar(bodyForceDict1.lookup("ymax12C1")));
+const scalar xmin13C1 (readScalar(bodyForceDict1.lookup("xmin13C1")));
+const scalar xmax13C1 (readScalar(bodyForceDict1.lookup("xmax13C1")));
+const scalar ymin13C1 (readScalar(bodyForceDict1.lookup("ymin13C1")));
+const scalar ymax13C1 (readScalar(bodyForceDict1.lookup("ymax13C1")));
+
+const scalar xmin2C1 (readScalar(bodyForceDict2.lookup("xmin2C1")));
+const scalar xmax2C1 (readScalar(bodyForceDict2.lookup("xmax2C1")));
+const scalar ymin2C1 (readScalar(bodyForceDict2.lookup("ymin2C1")));
+const scalar ymax2C1 (readScalar(bodyForceDict2.lookup("ymax2C1")));
+const scalar xmin21C1 (readScalar(bodyForceDict2.lookup("xmin21C1")));
+const scalar xmax21C1 (readScalar(bodyForceDict2.lookup("xmax21C1")));
+const scalar ymin21C1 (readScalar(bodyForceDict2.lookup("ymin21C1")));
+const scalar ymax21C1 (readScalar(bodyForceDict2.lookup("ymax21C1")));
+const scalar xmin22C1 (readScalar(bodyForceDict2.lookup("xmin22C1")));
+const scalar xmax22C1 (readScalar(bodyForceDict2.lookup("xmax22C1")));
+const scalar ymin22C1 (readScalar(bodyForceDict2.lookup("ymin22C1")));
+const scalar ymax22C1 (readScalar(bodyForceDict2.lookup("ymax22C1")));
+const scalar xmin23C1 (readScalar(bodyForceDict2.lookup("xmin23C1")));
+const scalar xmax23C1 (readScalar(bodyForceDict2.lookup("xmax23C1")));
+const scalar ymin23C1 (readScalar(bodyForceDict2.lookup("ymin23C1")));
+const scalar ymax23C1 (readScalar(bodyForceDict2.lookup("ymax23C1")));
+
+const scalar xoC1 (readScalar(bodyForceDict3.lookup("xoC1")));
+const scalar yoC1 (readScalar(bodyForceDict3.lookup("yoC1")));
+const scalar tipRadiusC1 (readScalar(bodyForceDict3.lookup("tipRadiusC1")));
+const scalar hubRadiusC1 (readScalar(bodyForceDict3.lookup("hubRadiusC1")));
+const scalar xo4C1 (readScalar(bodyForceDict4.lookup("xo4C1")));
+const scalar yo4C1 (readScalar(bodyForceDict4.lookup("yo4C1")));
+const scalar tipRadius4C1 (readScalar(bodyForceDict4.lookup("tipRadius4C1")));
+const scalar hubRadius4C1 (readScalar(bodyForceDict4.lookup("hubRadius4C1")));
+const scalar xo5C1 (readScalar(bodyForceDict5.lookup("xo5C1")));
+const scalar yo5C1 (readScalar(bodyForceDict5.lookup("yo5C1")));
+const scalar tipRadius5C1 (readScalar(bodyForceDict5.lookup("tipRadius5C1")));
+const scalar hubRadius5C1 (readScalar(bodyForceDict5.lookup("hubRadius5C1")));
+const scalar xo6C1 (readScalar(bodyForceDict6.lookup("xo6C1")));
+const scalar yo6C1 (readScalar(bodyForceDict6.lookup("yo6C1")));
+const scalar tipRadius6C1 (readScalar(bodyForceDict6.lookup("tipRadius6C1")));
+const scalar hubRadius6C1 (readScalar(bodyForceDict6.lookup("hubRadius6C1")));
+const scalar xo7C1 (readScalar(bodyForceDict7.lookup("xo7C1")));
+const scalar yo7C1 (readScalar(bodyForceDict7.lookup("yo7C1")));
+const scalar tipRadius7C1 (readScalar(bodyForceDict7.lookup("tipRadius7C1")));
+const scalar hubRadius7C1 (readScalar(bodyForceDict7.lookup("hubRadius7C1")));
+const scalar xo8C1 (readScalar(bodyForceDict8.lookup("xo8C1")));
+const scalar yo8C1 (readScalar(bodyForceDict8.lookup("yo8C1")));
+const scalar tipRadius8C1 (readScalar(bodyForceDict8.lookup("tipRadius8C1")));
+const scalar hubRadius8C1 (readScalar(bodyForceDict8.lookup("hubRadius8C1")));
+const scalar xo9C1 (readScalar(bodyForceDict9.lookup("xo9C1")));
+const scalar yo9C1 (readScalar(bodyForceDict9.lookup("yo9C1")));
+const scalar tipRadius9C1 (readScalar(bodyForceDict9.lookup("tipRadius9C1")));
+const scalar hubRadius9C1 (readScalar(bodyForceDict9.lookup("hubRadius9C1")));
+const scalar xo10C1 (readScalar(bodyForceDict10.lookup("xo10C1")));
+const scalar yo10C1 (readScalar(bodyForceDict10.lookup("yo10C1")));
+const scalar tipRadius10C1 (readScalar(bodyForceDict10.lookup("tipRadius10C1")));
+const scalar hubRadius10C1 (readScalar(bodyForceDict10.lookup("hubRadius10C1")));
+
+// Second row of Turbines
+const scalar xminC2 (readScalar(bodyForceDict.lookup("xminC2")));
+const scalar xmaxC2 (readScalar(bodyForceDict.lookup("xmaxC2")));
+const scalar yminC2 (readScalar(bodyForceDict.lookup("yminC2")));
+const scalar ymaxC2 (readScalar(bodyForceDict.lookup("ymaxC2")));
+
+const scalar xmin1C2 (readScalar(bodyForceDict1.lookup("xmin1C2")));
+const scalar xmax1C2 (readScalar(bodyForceDict1.lookup("xmax1C2")));
+const scalar ymin1C2 (readScalar(bodyForceDict1.lookup("ymin1C2")));
+const scalar ymax1C2 (readScalar(bodyForceDict1.lookup("ymax1C2")));
+const scalar xmin11C2 (readScalar(bodyForceDict1.lookup("xmin11C2")));
+const scalar xmax11C2 (readScalar(bodyForceDict1.lookup("xmax11C2")));
+const scalar ymin11C2 (readScalar(bodyForceDict1.lookup("ymin11C2")));
+const scalar ymax11C2 (readScalar(bodyForceDict1.lookup("ymax11C2")));
+const scalar xmin12C2 (readScalar(bodyForceDict1.lookup("xmin12C2")));
+const scalar xmax12C2 (readScalar(bodyForceDict1.lookup("xmax12C2")));
+const scalar ymin12C2 (readScalar(bodyForceDict1.lookup("ymin12C2")));
+const scalar ymax12C2 (readScalar(bodyForceDict1.lookup("ymax12C2")));
+const scalar xmin13C2 (readScalar(bodyForceDict1.lookup("xmin13C2")));
+const scalar xmax13C2 (readScalar(bodyForceDict1.lookup("xmax13C2")));
+const scalar ymin13C2 (readScalar(bodyForceDict1.lookup("ymin13C2")));
+const scalar ymax13C2 (readScalar(bodyForceDict1.lookup("ymax13C2")));
+
+const scalar xmin2C2 (readScalar(bodyForceDict2.lookup("xmin2C2")));
+const scalar xmax2C2 (readScalar(bodyForceDict2.lookup("xmax2C2")));
+const scalar ymin2C2 (readScalar(bodyForceDict2.lookup("ymin2C2")));
+const scalar ymax2C2 (readScalar(bodyForceDict2.lookup("ymax2C2")));
+const scalar xmin21C2 (readScalar(bodyForceDict2.lookup("xmin21C2")));
+const scalar xmax21C2 (readScalar(bodyForceDict2.lookup("xmax21C2")));
+const scalar ymin21C2 (readScalar(bodyForceDict2.lookup("ymin21C2")));
+const scalar ymax21C2 (readScalar(bodyForceDict2.lookup("ymax21C2")));
+const scalar xmin22C2 (readScalar(bodyForceDict2.lookup("xmin22C2")));
+const scalar xmax22C2 (readScalar(bodyForceDict2.lookup("xmax22C2")));
+const scalar ymin22C2 (readScalar(bodyForceDict2.lookup("ymin22C2")));
+const scalar ymax22C2 (readScalar(bodyForceDict2.lookup("ymax22C2")));
+const scalar xmin23C2 (readScalar(bodyForceDict2.lookup("xmin23C2")));
+const scalar xmax23C2 (readScalar(bodyForceDict2.lookup("xmax23C2")));
+const scalar ymin23C2 (readScalar(bodyForceDict2.lookup("ymin23C2")));
+const scalar ymax23C2 (readScalar(bodyForceDict2.lookup("ymax23C2")));
+
+const scalar xoC2 (readScalar(bodyForceDict3.lookup("xoC2")));
+const scalar yoC2 (readScalar(bodyForceDict3.lookup("yoC2")));
+const scalar tipRadiusC2 (readScalar(bodyForceDict3.lookup("tipRadiusC2")));
+const scalar hubRadiusC2 (readScalar(bodyForceDict3.lookup("hubRadiusC2")));
+const scalar xo4C2 (readScalar(bodyForceDict4.lookup("xo4C2")));
+const scalar yo4C2 (readScalar(bodyForceDict4.lookup("yo4C2")));
+const scalar tipRadius4C2 (readScalar(bodyForceDict4.lookup("tipRadius4C2")));
+const scalar hubRadius4C2 (readScalar(bodyForceDict4.lookup("hubRadius4C2")));
+const scalar xo5C2 (readScalar(bodyForceDict5.lookup("xo5C2")));
+const scalar yo5C2 (readScalar(bodyForceDict5.lookup("yo5C2")));
+const scalar tipRadius5C2 (readScalar(bodyForceDict5.lookup("tipRadius5C2")));
+const scalar hubRadius5C2 (readScalar(bodyForceDict5.lookup("hubRadius5C2")));
+const scalar xo6C2 (readScalar(bodyForceDict6.lookup("xo6C2")));
+const scalar yo6C2 (readScalar(bodyForceDict6.lookup("yo6C2")));
+const scalar tipRadius6C2 (readScalar(bodyForceDict6.lookup("tipRadius6C2")));
+const scalar hubRadius6C2 (readScalar(bodyForceDict6.lookup("hubRadius6C2")));
+const scalar xo7C2 (readScalar(bodyForceDict7.lookup("xo7C2")));
+const scalar yo7C2 (readScalar(bodyForceDict7.lookup("yo7C2")));
+const scalar tipRadius7C2 (readScalar(bodyForceDict7.lookup("tipRadius7C2")));
+const scalar hubRadius7C2 (readScalar(bodyForceDict7.lookup("hubRadius7C2")));
+const scalar xo8C2 (readScalar(bodyForceDict8.lookup("xo8C2")));
+const scalar yo8C2 (readScalar(bodyForceDict8.lookup("yo8C2")));
+const scalar tipRadius8C2 (readScalar(bodyForceDict8.lookup("tipRadius8C2")));
+const scalar hubRadius8C2 (readScalar(bodyForceDict8.lookup("hubRadius8C2")));
+const scalar xo9C2 (readScalar(bodyForceDict9.lookup("xo9C2")));
+const scalar yo9C2 (readScalar(bodyForceDict9.lookup("yo9C2")));
+const scalar tipRadius9C2 (readScalar(bodyForceDict9.lookup("tipRadius9C2")));
+const scalar hubRadius9C2 (readScalar(bodyForceDict9.lookup("hubRadius9C2")));
+const scalar xo10C2 (readScalar(bodyForceDict10.lookup("xo10C2")));
+const scalar yo10C2 (readScalar(bodyForceDict10.lookup("yo10C2")));
+const scalar tipRadius10C2 (readScalar(bodyForceDict10.lookup("tipRadius10C2")));
+const scalar hubRadius10C2 (readScalar(bodyForceDict10.lookup("hubRadius10C2")));
+
+
+// Third row of Turbines
+const scalar xminC3 (readScalar(bodyForceDict.lookup("xminC3")));
+const scalar xmaxC3 (readScalar(bodyForceDict.lookup("xmaxC3")));
+const scalar yminC3 (readScalar(bodyForceDict.lookup("yminC3")));
+const scalar ymaxC3 (readScalar(bodyForceDict.lookup("ymaxC3")));
+
+const scalar xmin1C3 (readScalar(bodyForceDict1.lookup("xmin1C3")));
+const scalar xmax1C3 (readScalar(bodyForceDict1.lookup("xmax1C3")));
+const scalar ymin1C3 (readScalar(bodyForceDict1.lookup("ymin1C3")));
+const scalar ymax1C3 (readScalar(bodyForceDict1.lookup("ymax1C3")));
+const scalar xmin11C3 (readScalar(bodyForceDict1.lookup("xmin11C3")));
+const scalar xmax11C3 (readScalar(bodyForceDict1.lookup("xmax11C3")));
+const scalar ymin11C3 (readScalar(bodyForceDict1.lookup("ymin11C3")));
+const scalar ymax11C3 (readScalar(bodyForceDict1.lookup("ymax11C3")));
+const scalar xmin12C3 (readScalar(bodyForceDict1.lookup("xmin12C3")));
+const scalar xmax12C3 (readScalar(bodyForceDict1.lookup("xmax12C3")));
+const scalar ymin12C3 (readScalar(bodyForceDict1.lookup("ymin12C3")));
+const scalar ymax12C3 (readScalar(bodyForceDict1.lookup("ymax12C3")));
+const scalar xmin13C3 (readScalar(bodyForceDict1.lookup("xmin13C3")));
+const scalar xmax13C3 (readScalar(bodyForceDict1.lookup("xmax13C3")));
+const scalar ymin13C3 (readScalar(bodyForceDict1.lookup("ymin13C3")));
+const scalar ymax13C3 (readScalar(bodyForceDict1.lookup("ymax13C3")));
+
+const scalar xmin2C3 (readScalar(bodyForceDict2.lookup("xmin2C3")));
+const scalar xmax2C3 (readScalar(bodyForceDict2.lookup("xmax2C3")));
+const scalar ymin2C3 (readScalar(bodyForceDict2.lookup("ymin2C3")));
+const scalar ymax2C3 (readScalar(bodyForceDict2.lookup("ymax2C3")));
+const scalar xmin21C3 (readScalar(bodyForceDict2.lookup("xmin21C3")));
+const scalar xmax21C3 (readScalar(bodyForceDict2.lookup("xmax21C3")));
+const scalar ymin21C3 (readScalar(bodyForceDict2.lookup("ymin21C3")));
+const scalar ymax21C3 (readScalar(bodyForceDict2.lookup("ymax21C3")));
+const scalar xmin22C3 (readScalar(bodyForceDict2.lookup("xmin22C3")));
+const scalar xmax22C3 (readScalar(bodyForceDict2.lookup("xmax22C3")));
+const scalar ymin22C3 (readScalar(bodyForceDict2.lookup("ymin22C3")));
+const scalar ymax22C3 (readScalar(bodyForceDict2.lookup("ymax22C3")));
+const scalar xmin23C3 (readScalar(bodyForceDict2.lookup("xmin23C3")));
+const scalar xmax23C3 (readScalar(bodyForceDict2.lookup("xmax23C3")));
+const scalar ymin23C3 (readScalar(bodyForceDict2.lookup("ymin23C3")));
+const scalar ymax23C3 (readScalar(bodyForceDict2.lookup("ymax23C3")));
+
+const scalar xoC3 (readScalar(bodyForceDict3.lookup("xoC3")));
+const scalar yoC3 (readScalar(bodyForceDict3.lookup("yoC3")));
+const scalar tipRadiusC3 (readScalar(bodyForceDict3.lookup("tipRadiusC3")));
+const scalar hubRadiusC3 (readScalar(bodyForceDict3.lookup("hubRadiusC3")));
+const scalar xo4C3 (readScalar(bodyForceDict4.lookup("xo4C3")));
+const scalar yo4C3 (readScalar(bodyForceDict4.lookup("yo4C3")));
+const scalar tipRadius4C3 (readScalar(bodyForceDict4.lookup("tipRadius4C3")));
+const scalar hubRadius4C3 (readScalar(bodyForceDict4.lookup("hubRadius4C3")));
+const scalar xo5C3 (readScalar(bodyForceDict5.lookup("xo5C3")));
+const scalar yo5C3 (readScalar(bodyForceDict5.lookup("yo5C3")));
+const scalar tipRadius5C3 (readScalar(bodyForceDict5.lookup("tipRadius5C3")));
+const scalar hubRadius5C3 (readScalar(bodyForceDict5.lookup("hubRadius5C3")));
+const scalar xo6C3 (readScalar(bodyForceDict6.lookup("xo6C3")));
+const scalar yo6C3 (readScalar(bodyForceDict6.lookup("yo6C3")));
+const scalar tipRadius6C3 (readScalar(bodyForceDict6.lookup("tipRadius6C3")));
+const scalar hubRadius6C3 (readScalar(bodyForceDict6.lookup("hubRadius6C3")));
+const scalar xo7C3 (readScalar(bodyForceDict7.lookup("xo7C3")));
+const scalar yo7C3 (readScalar(bodyForceDict7.lookup("yo7C3")));
+const scalar tipRadius7C3 (readScalar(bodyForceDict7.lookup("tipRadius7C3")));
+const scalar hubRadius7C3 (readScalar(bodyForceDict7.lookup("hubRadius7C3")));
+const scalar xo8C3 (readScalar(bodyForceDict8.lookup("xo8C3")));
+const scalar yo8C3 (readScalar(bodyForceDict8.lookup("yo8C3")));
+const scalar tipRadius8C3 (readScalar(bodyForceDict8.lookup("tipRadius8C3")));
+const scalar hubRadius8C3 (readScalar(bodyForceDict8.lookup("hubRadius8C3")));
+const scalar xo9C3 (readScalar(bodyForceDict9.lookup("xo9C3")));
+const scalar yo9C3 (readScalar(bodyForceDict9.lookup("yo9C3")));
+const scalar tipRadius9C3 (readScalar(bodyForceDict9.lookup("tipRadius9C3")));
+const scalar hubRadius9C3 (readScalar(bodyForceDict9.lookup("hubRadius9C3")));
+const scalar xo10C3 (readScalar(bodyForceDict10.lookup("xo10C3")));
+const scalar yo10C3 (readScalar(bodyForceDict10.lookup("yo10C3")));
+const scalar tipRadius10C3 (readScalar(bodyForceDict10.lookup("tipRadius10C3")));
+const scalar hubRadius10C3 (readScalar(bodyForceDict10.lookup("hubRadius10C3")));
+
+
+// Fourth row of Turbines
+const scalar xminC4 (readScalar(bodyForceDict.lookup("xminC4")));
+const scalar xmaxC4 (readScalar(bodyForceDict.lookup("xmaxC4")));
+const scalar yminC4 (readScalar(bodyForceDict.lookup("yminC4")));
+const scalar ymaxC4 (readScalar(bodyForceDict.lookup("ymaxC4")));
+
+const scalar xmin1C4 (readScalar(bodyForceDict1.lookup("xmin1C4")));
+const scalar xmax1C4 (readScalar(bodyForceDict1.lookup("xmax1C4")));
+const scalar ymin1C4 (readScalar(bodyForceDict1.lookup("ymin1C4")));
+const scalar ymax1C4 (readScalar(bodyForceDict1.lookup("ymax1C4")));
+const scalar xmin11C4 (readScalar(bodyForceDict1.lookup("xmin11C4")));
+const scalar xmax11C4 (readScalar(bodyForceDict1.lookup("xmax11C4")));
+const scalar ymin11C4 (readScalar(bodyForceDict1.lookup("ymin11C4")));
+const scalar ymax11C4 (readScalar(bodyForceDict1.lookup("ymax11C4")));
+const scalar xmin12C4 (readScalar(bodyForceDict1.lookup("xmin12C4")));
+const scalar xmax12C4 (readScalar(bodyForceDict1.lookup("xmax12C4")));
+const scalar ymin12C4 (readScalar(bodyForceDict1.lookup("ymin12C4")));
+const scalar ymax12C4 (readScalar(bodyForceDict1.lookup("ymax12C4")));
+const scalar xmin13C4 (readScalar(bodyForceDict1.lookup("xmin13C4")));
+const scalar xmax13C4 (readScalar(bodyForceDict1.lookup("xmax13C4")));
+const scalar ymin13C4 (readScalar(bodyForceDict1.lookup("ymin13C4")));
+const scalar ymax13C4 (readScalar(bodyForceDict1.lookup("ymax13C4")));
+
+const scalar xmin2C4 (readScalar(bodyForceDict2.lookup("xmin2C4")));
+const scalar xmax2C4 (readScalar(bodyForceDict2.lookup("xmax2C4")));
+const scalar ymin2C4 (readScalar(bodyForceDict2.lookup("ymin2C4")));
+const scalar ymax2C4 (readScalar(bodyForceDict2.lookup("ymax2C4")));
+const scalar xmin21C4 (readScalar(bodyForceDict2.lookup("xmin21C4")));
+const scalar xmax21C4 (readScalar(bodyForceDict2.lookup("xmax21C4")));
+const scalar ymin21C4 (readScalar(bodyForceDict2.lookup("ymin21C4")));
+const scalar ymax21C4 (readScalar(bodyForceDict2.lookup("ymax21C4")));
+const scalar xmin22C4 (readScalar(bodyForceDict2.lookup("xmin22C4")));
+const scalar xmax22C4 (readScalar(bodyForceDict2.lookup("xmax22C4")));
+const scalar ymin22C4 (readScalar(bodyForceDict2.lookup("ymin22C4")));
+const scalar ymax22C4 (readScalar(bodyForceDict2.lookup("ymax22C4")));
+const scalar xmin23C4 (readScalar(bodyForceDict2.lookup("xmin23C4")));
+const scalar xmax23C4 (readScalar(bodyForceDict2.lookup("xmax23C4")));
+const scalar ymin23C4 (readScalar(bodyForceDict2.lookup("ymin23C4")));
+const scalar ymax23C4 (readScalar(bodyForceDict2.lookup("ymax23C4")));
+
+const scalar xoC4 (readScalar(bodyForceDict3.lookup("xoC4")));
+const scalar yoC4 (readScalar(bodyForceDict3.lookup("yoC4")));
+const scalar tipRadiusC4 (readScalar(bodyForceDict3.lookup("tipRadiusC4")));
+const scalar hubRadiusC4 (readScalar(bodyForceDict3.lookup("hubRadiusC4")));
+const scalar xo4C4 (readScalar(bodyForceDict4.lookup("xo4C4")));
+const scalar yo4C4 (readScalar(bodyForceDict4.lookup("yo4C4")));
+const scalar tipRadius4C4 (readScalar(bodyForceDict4.lookup("tipRadius4C4")));
+const scalar hubRadius4C4 (readScalar(bodyForceDict4.lookup("hubRadius4C4")));
+const scalar xo5C4 (readScalar(bodyForceDict5.lookup("xo5C4")));
+const scalar yo5C4 (readScalar(bodyForceDict5.lookup("yo5C4")));
+const scalar tipRadius5C4 (readScalar(bodyForceDict5.lookup("tipRadius5C4")));
+const scalar hubRadius5C4 (readScalar(bodyForceDict5.lookup("hubRadius5C4")));
+const scalar xo6C4 (readScalar(bodyForceDict6.lookup("xo6C4")));
+const scalar yo6C4 (readScalar(bodyForceDict6.lookup("yo6C4")));
+const scalar tipRadius6C4 (readScalar(bodyForceDict6.lookup("tipRadius6C4")));
+const scalar hubRadius6C4 (readScalar(bodyForceDict6.lookup("hubRadius6C4")));
+const scalar xo7C4 (readScalar(bodyForceDict7.lookup("xo7C4")));
+const scalar yo7C4 (readScalar(bodyForceDict7.lookup("yo7C4")));
+const scalar tipRadius7C4 (readScalar(bodyForceDict7.lookup("tipRadius7C4")));
+const scalar hubRadius7C4 (readScalar(bodyForceDict7.lookup("hubRadius7C4")));
+const scalar xo8C4 (readScalar(bodyForceDict8.lookup("xo8C4")));
+const scalar yo8C4 (readScalar(bodyForceDict8.lookup("yo8C4")));
+const scalar tipRadius8C4 (readScalar(bodyForceDict8.lookup("tipRadius8C4")));
+const scalar hubRadius8C4 (readScalar(bodyForceDict8.lookup("hubRadius8C4")));
+const scalar xo9C4 (readScalar(bodyForceDict9.lookup("xo9C4")));
+const scalar yo9C4 (readScalar(bodyForceDict9.lookup("yo9C4")));
+const scalar tipRadius9C4 (readScalar(bodyForceDict9.lookup("tipRadius9C4")));
+const scalar hubRadius9C4 (readScalar(bodyForceDict9.lookup("hubRadius9C4")));
+const scalar xo10C4 (readScalar(bodyForceDict10.lookup("xo10C4")));
+const scalar yo10C4 (readScalar(bodyForceDict10.lookup("yo10C4")));
+const scalar tipRadius10C4 (readScalar(bodyForceDict10.lookup("tipRadius10C4")));
+const scalar hubRadius10C4 (readScalar(bodyForceDict10.lookup("hubRadius10C4")));
+
+//Fifth row of turbines
+
+const scalar xminC5 (readScalar(bodyForceDict.lookup("xminC5")));
+const scalar xmaxC5 (readScalar(bodyForceDict.lookup("xmaxC5")));
+const scalar yminC5 (readScalar(bodyForceDict.lookup("yminC5")));
+const scalar ymaxC5 (readScalar(bodyForceDict.lookup("ymaxC5")));
+
+const scalar xmin1C5 (readScalar(bodyForceDict1.lookup("xmin1C5")));
+const scalar xmax1C5 (readScalar(bodyForceDict1.lookup("xmax1C5")));
+const scalar ymin1C5 (readScalar(bodyForceDict1.lookup("ymin1C5")));
+const scalar ymax1C5 (readScalar(bodyForceDict1.lookup("ymax1C5")));
+const scalar xmin11C5 (readScalar(bodyForceDict1.lookup("xmin11C5")));
+const scalar xmax11C5 (readScalar(bodyForceDict1.lookup("xmax11C5")));
+const scalar ymin11C5 (readScalar(bodyForceDict1.lookup("ymin11C5")));
+const scalar ymax11C5 (readScalar(bodyForceDict1.lookup("ymax11C5")));
+const scalar xmin12C5 (readScalar(bodyForceDict1.lookup("xmin12C5")));
+const scalar xmax12C5 (readScalar(bodyForceDict1.lookup("xmax12C5")));
+const scalar ymin12C5 (readScalar(bodyForceDict1.lookup("ymin12C5")));
+const scalar ymax12C5 (readScalar(bodyForceDict1.lookup("ymax12C5")));
+const scalar xmin13C5 (readScalar(bodyForceDict1.lookup("xmin13C5")));
+const scalar xmax13C5 (readScalar(bodyForceDict1.lookup("xmax13C5")));
+const scalar ymin13C5 (readScalar(bodyForceDict1.lookup("ymin13C5")));
+const scalar ymax13C5 (readScalar(bodyForceDict1.lookup("ymax13C5")));
+
+const scalar xmin2C5 (readScalar(bodyForceDict2.lookup("xmin2C5")));
+const scalar xmax2C5 (readScalar(bodyForceDict2.lookup("xmax2C5")));
+const scalar ymin2C5 (readScalar(bodyForceDict2.lookup("ymin2C5")));
+const scalar ymax2C5 (readScalar(bodyForceDict2.lookup("ymax2C5")));
+const scalar xmin21C5 (readScalar(bodyForceDict2.lookup("xmin21C5")));
+const scalar xmax21C5 (readScalar(bodyForceDict2.lookup("xmax21C5")));
+const scalar ymin21C5 (readScalar(bodyForceDict2.lookup("ymin21C5")));
+const scalar ymax21C5 (readScalar(bodyForceDict2.lookup("ymax21C5")));
+const scalar xmin22C5 (readScalar(bodyForceDict2.lookup("xmin22C5")));
+const scalar xmax22C5 (readScalar(bodyForceDict2.lookup("xmax22C5")));
+const scalar ymin22C5 (readScalar(bodyForceDict2.lookup("ymin22C5")));
+const scalar ymax22C5 (readScalar(bodyForceDict2.lookup("ymax22C5")));
+const scalar xmin23C5 (readScalar(bodyForceDict2.lookup("xmin23C5")));
+const scalar xmax23C5 (readScalar(bodyForceDict2.lookup("xmax23C5")));
+const scalar ymin23C5 (readScalar(bodyForceDict2.lookup("ymin23C5")));
+const scalar ymax23C5 (readScalar(bodyForceDict2.lookup("ymax23C5")));
+
+const scalar xoC5 (readScalar(bodyForceDict3.lookup("xoC5")));
+const scalar yoC5 (readScalar(bodyForceDict3.lookup("yoC5")));
+const scalar tipRadiusC5 (readScalar(bodyForceDict3.lookup("tipRadiusC5")));
+const scalar hubRadiusC5 (readScalar(bodyForceDict3.lookup("hubRadiusC5")));
+const scalar xo4C5 (readScalar(bodyForceDict4.lookup("xo4C5")));
+const scalar yo4C5 (readScalar(bodyForceDict4.lookup("yo4C5")));
+const scalar tipRadius4C5 (readScalar(bodyForceDict4.lookup("tipRadius4C5")));
+const scalar hubRadius4C5 (readScalar(bodyForceDict4.lookup("hubRadius4C5")));
+const scalar xo5C5 (readScalar(bodyForceDict5.lookup("xo5C5")));
+const scalar yo5C5 (readScalar(bodyForceDict5.lookup("yo5C5")));
+const scalar tipRadius5C5 (readScalar(bodyForceDict5.lookup("tipRadius5C5")));
+const scalar hubRadius5C5 (readScalar(bodyForceDict5.lookup("hubRadius5C5")));
+const scalar xo6C5 (readScalar(bodyForceDict6.lookup("xo6C5")));
+const scalar yo6C5 (readScalar(bodyForceDict6.lookup("yo6C5")));
+const scalar tipRadius6C5 (readScalar(bodyForceDict6.lookup("tipRadius6C5")));
+const scalar hubRadius6C5 (readScalar(bodyForceDict6.lookup("hubRadius6C5")));
+const scalar xo7C5 (readScalar(bodyForceDict7.lookup("xo7C5")));
+const scalar yo7C5 (readScalar(bodyForceDict7.lookup("yo7C5")));
+const scalar tipRadius7C5 (readScalar(bodyForceDict7.lookup("tipRadius7C5")));
+const scalar hubRadius7C5 (readScalar(bodyForceDict7.lookup("hubRadius7C5")));
+const scalar xo8C5 (readScalar(bodyForceDict8.lookup("xo8C5")));
+const scalar yo8C5 (readScalar(bodyForceDict8.lookup("yo8C5")));
+const scalar tipRadius8C5 (readScalar(bodyForceDict8.lookup("tipRadius8C5")));
+const scalar hubRadius8C5 (readScalar(bodyForceDict8.lookup("hubRadius8C5")));
+const scalar xo9C5 (readScalar(bodyForceDict9.lookup("xo9C5")));
+const scalar yo9C5 (readScalar(bodyForceDict9.lookup("yo9C5")));
+const scalar tipRadius9C5 (readScalar(bodyForceDict9.lookup("tipRadius9C5")));
+const scalar hubRadius9C5 (readScalar(bodyForceDict9.lookup("hubRadius9C5")));
+const scalar xo10C5 (readScalar(bodyForceDict10.lookup("xo10C5")));
+const scalar yo10C5 (readScalar(bodyForceDict10.lookup("yo10C5")));
+const scalar tipRadius10C5 (readScalar(bodyForceDict10.lookup("tipRadius10C5")));
+const scalar hubRadius10C5 (readScalar(bodyForceDict10.lookup("hubRadius10C5")));
+
+// Z direction spacing for the 12 column of turbines
+
+// first column
+
+const scalar zminR1C1 (readScalar(bodyForceDict.lookup("zminR1C1")));
+const scalar zmaxR1C1 (readScalar(bodyForceDict.lookup("zmaxR1C1")));
+
+const scalar zminR2C1 (readScalar(bodyForceDict.lookup("zminR2C1")));
+const scalar zmaxR2C1 (readScalar(bodyForceDict.lookup("zmaxR2C1")));
+
+const scalar zminR3C1 (readScalar(bodyForceDict.lookup("zminR3C1")));
+const scalar zmaxR3C1 (readScalar(bodyForceDict.lookup("zmaxR3C1")));
+
+const scalar zminR4C1 (readScalar(bodyForceDict.lookup("zminR4C1")));
+const scalar zmaxR4C1 (readScalar(bodyForceDict.lookup("zmaxR4C1")));
+
+const scalar zminR5C1 (readScalar(bodyForceDict.lookup("zminR5C1")));
+const scalar zmaxR5C1 (readScalar(bodyForceDict.lookup("zmaxR5C1")));
+
+const scalar zminR6C1 (readScalar(bodyForceDict.lookup("zminR6C1")));
+const scalar zmaxR6C1 (readScalar(bodyForceDict.lookup("zmaxR6C1")));
+
+
+// second column
+
+const scalar zminR1C2 (readScalar(bodyForceDict.lookup("zminR1C2")));
+const scalar zmaxR1C2 (readScalar(bodyForceDict.lookup("zmaxR1C2")));
+
+const scalar zminR2C2 (readScalar(bodyForceDict.lookup("zminR2C2")));
+const scalar zmaxR2C2 (readScalar(bodyForceDict.lookup("zmaxR2C2")));
+
+const scalar zminR3C2 (readScalar(bodyForceDict.lookup("zminR3C2")));
+const scalar zmaxR3C2 (readScalar(bodyForceDict.lookup("zmaxR3C2")));
+
+const scalar zminR4C2 (readScalar(bodyForceDict.lookup("zminR4C2")));
+const scalar zmaxR4C2 (readScalar(bodyForceDict.lookup("zmaxR4C2")));
+
+const scalar zminR5C2 (readScalar(bodyForceDict.lookup("zminR5C2")));
+const scalar zmaxR5C2 (readScalar(bodyForceDict.lookup("zmaxR5C2")));
+
+const scalar zminR6C2 (readScalar(bodyForceDict.lookup("zminR6C2")));
+const scalar zmaxR6C2 (readScalar(bodyForceDict.lookup("zmaxR6C2")));
+
+//third column
+
+const scalar zminR1C3 (readScalar(bodyForceDict.lookup("zminR1C3")));
+const scalar zmaxR1C3 (readScalar(bodyForceDict.lookup("zmaxR1C3")));
+
+const scalar zminR2C3 (readScalar(bodyForceDict.lookup("zminR2C3")));
+const scalar zmaxR2C3 (readScalar(bodyForceDict.lookup("zmaxR2C3")));
+
+const scalar zminR3C3 (readScalar(bodyForceDict.lookup("zminR3C3")));
+const scalar zmaxR3C3 (readScalar(bodyForceDict.lookup("zmaxR3C3")));
+
+const scalar zminR4C3 (readScalar(bodyForceDict.lookup("zminR4C3")));
+const scalar zmaxR4C3 (readScalar(bodyForceDict.lookup("zmaxR4C3")));
+
+const scalar zminR5C3 (readScalar(bodyForceDict.lookup("zminR5C3")));
+const scalar zmaxR5C3 (readScalar(bodyForceDict.lookup("zmaxR5C3")));
+
+const scalar zminR6C3 (readScalar(bodyForceDict.lookup("zminR6C3")));
+const scalar zmaxR6C3 (readScalar(bodyForceDict.lookup("zmaxR6C3")));
+
+/*//fourth column
+
+const scalar zminR1C4 (readScalar(bodyForceDict.lookup("zminR1C4")));
+const scalar zmaxR1C4 (readScalar(bodyForceDict.lookup("zmaxR1C4")));
+
+const scalar zminR2C4 (readScalar(bodyForceDict.lookup("zminR2C4")));
+const scalar zmaxR2C4 (readScalar(bodyForceDict.lookup("zmaxR2C4")));
+
+const scalar zminR3C4 (readScalar(bodyForceDict.lookup("zminR3C4")));
+const scalar zmaxR3C4 (readScalar(bodyForceDict.lookup("zmaxR3C4")));
+
+const scalar zminR4C4 (readScalar(bodyForceDict.lookup("zminR4C4")));
+const scalar zmaxR4C4 (readScalar(bodyForceDict.lookup("zmaxR4C4")));
+
+const scalar zminR5C4 (readScalar(bodyForceDict.lookup("zminR5C4")));
+const scalar zmaxR5C4 (readScalar(bodyForceDict.lookup("zmaxR5C4")));
+
+const scalar zminR6C4 (readScalar(bodyForceDict.lookup("zminR6C4")));
+const scalar zmaxR6C4 (readScalar(bodyForceDict.lookup("zmaxR6C4")));
+
+//fifth column
+
+const scalar zminR1C5 (readScalar(bodyForceDict.lookup("zminR1C5")));
+const scalar zmaxR1C5 (readScalar(bodyForceDict.lookup("zmaxR1C5")));
+
+const scalar zminR2C5 (readScalar(bodyForceDict.lookup("zminR2C5")));
+const scalar zmaxR2C5 (readScalar(bodyForceDict.lookup("zmaxR2C5")));
+
+const scalar zminR3C5 (readScalar(bodyForceDict.lookup("zminR3C5")));
+const scalar zmaxR3C5 (readScalar(bodyForceDict.lookup("zmaxR3C5")));
+
+const scalar zminR4C5 (readScalar(bodyForceDict.lookup("zminR4C5")));
+const scalar zmaxR4C5 (readScalar(bodyForceDict.lookup("zmaxR4C5")));
+
+const scalar zminR5C5 (readScalar(bodyForceDict.lookup("zminR5C5")));
+const scalar zmaxR5C5 (readScalar(bodyForceDict.lookup("zmaxR5C5")));
+
+const scalar zminR6C5 (readScalar(bodyForceDict.lookup("zminR6C5")));
+const scalar zmaxR6C5 (readScalar(bodyForceDict.lookup("zmaxR6C5")));*/
+
+
+
+
+// Define the body force magnitude and direction
+vector unitVector(bodyForceDict.lookup("directionVector") );
+vector unitVector1(bodyForceDict1.lookup("directionVector") );
+vector unitVector2(bodyForceDict2.lookup("directionVector") );
+vector unitVector3(bodyForceDict3.lookup("directionVector") );
+vector unitVector4(bodyForceDict4.lookup("directionVector") );
+vector unitVector5(bodyForceDict5.lookup("directionVector") );
+vector unitVector6(bodyForceDict6.lookup("directionVector") );
+vector unitVector7(bodyForceDict7.lookup("directionVector") );
+vector unitVector8(bodyForceDict8.lookup("directionVector") );
+vector unitVector9(bodyForceDict9.lookup("directionVector") );
+vector unitVector10(bodyForceDict10.lookup("directionVector") );
+unitVector /= mag(unitVector);
+unitVector1 /= mag(unitVector1);
+unitVector2 /= mag(unitVector2);
+unitVector3 /= mag(unitVector3);
+unitVector4 /= mag(unitVector4);
+unitVector5 /= mag(unitVector5);
+unitVector6 /= mag(unitVector6);
+unitVector7 /= mag(unitVector7);
+unitVector8 /= mag(unitVector8);
+unitVector9 /= mag(unitVector9);
+unitVector10 /= mag(unitVector10);
+const scalar magnitude1(readScalar(bodyForceDict.lookup("magnitude1")));// First column turbines
+const scalar magnitude2(readScalar(bodyForceDict.lookup("magnitude2")));//Second column turbines
+const scalar magnitude3(readScalar(bodyForceDict.lookup("magnitude3")));//Third column turbines
+const scalar magnitude4(readScalar(bodyForceDict.lookup("magnitude4")));//Fourth column  turbines
+const scalar magnitude5(readScalar(bodyForceDict.lookup("magnitude5")));//Fifth column turbines
+
+label numCells(0),numInside(0);
+scalar totalVolume1(0.0);
+scalar totalVolume2(0.0);
+scalar totalVolume3(0.0);
+scalar totalVolume4(0.0);
+scalar totalVolume5(0.0);
+
+//label ringNumCells(0),ringNumInside(0);
+//scalar ringTotalVolume(0.0);
+
+forAll(mesh.cells(),cellI)
+{
+// Loop over all the cells in the mesh
+++numCells;
+
+// Check containment of each cell centre
+//First column of turbines
+const vector& cellCenter = mesh.C()[cellI];
+const scalar dxC1 = cellCenter[0];
+const scalar dyC1 = cellCenter[1];
+
+const scalar dx1C1 = cellCenter[0];
+const scalar dy1C1 = cellCenter[1];
+const scalar dx11C1 = cellCenter[0];
+const scalar dy11C1 = cellCenter[1];
+const scalar dx12C1 = cellCenter[0];
+const scalar dy12C1 = cellCenter[1];
+const scalar dx13C1 = cellCenter[0];
+const scalar dy13C1 = cellCenter[1];
+
+const scalar dx2C1 = cellCenter[0];
+const scalar dy2C1 = cellCenter[1];
+const scalar dx21C1 = cellCenter[0];
+const scalar dy21C1 = cellCenter[1];
+const scalar dx22C1 = cellCenter[0];
+const scalar dy22C1 = cellCenter[1];
+const scalar dx23C1 = cellCenter[0];
+const scalar dy23C1 = cellCenter[1];
+
+const scalar dx3C1 = cellCenter[0] - xoC1;
+const scalar dy3C1 = cellCenter[1] - yoC1;
+const vector rC1(dx3C1,dy3C1,0);
+const scalar dx4C1 = cellCenter[0] - xo4C1;
+const scalar dy4C1 = cellCenter[1] - yo4C1;
+const vector r4C1(dx4C1,dy4C1,0);
+const scalar dx5C1 = cellCenter[0] - xo5C1;
+const scalar dy5C1 = cellCenter[1] - yo5C1;
+const vector r5C1(dx5C1,dy5C1,0);
+const scalar dx6C1 = cellCenter[0] - xo6C1;
+const scalar dy6C1 = cellCenter[1] - yo6C1;
+const vector r6C1(dx6C1,dy6C1,0);
+const scalar dx7C1 = cellCenter[0] - xo7C1;
+const scalar dy7C1 = cellCenter[1] - yo7C1;
+const vector r7C1(dx7C1,dy7C1,0);
+const scalar dx8C1 = cellCenter[0] - xo8C1;
+const scalar dy8C1 = cellCenter[1] - yo8C1;
+const vector r8C1(dx8C1,dy8C1,0);
+const scalar dx9C1 = cellCenter[0] - xo9C1;
+const scalar dy9C1 = cellCenter[1] - yo9C1;
+const vector r9C1(dx9C1,dy9C1,0);
+const scalar dx10C1 = cellCenter[0] - xo10C1;
+const scalar dy10C1 = cellCenter[1] - yo10C1;
+const vector r10C1(dx10C1,dy10C1,0);
+
+
+//second row of turbines
+//const vector& cellCenter = mesh.C()[cellI];
+const scalar dxC2 = cellCenter[0];
+const scalar dyC2 = cellCenter[1];
+
+const scalar dx1C2 = cellCenter[0];
+const scalar dy1C2 = cellCenter[1];
+const scalar dx11C2 = cellCenter[0];
+const scalar dy11C2 = cellCenter[1];
+const scalar dx12C2 = cellCenter[0];
+const scalar dy12C2 = cellCenter[1];
+const scalar dx13C2 = cellCenter[0];
+const scalar dy13C2 = cellCenter[1];
+
+const scalar dx2C2 = cellCenter[0];
+const scalar dy2C2 = cellCenter[1];
+const scalar dx21C2 = cellCenter[0];
+const scalar dy21C2 = cellCenter[1];
+const scalar dx22C2 = cellCenter[0];
+const scalar dy22C2 = cellCenter[1];
+const scalar dx23C2 = cellCenter[0];
+const scalar dy23C2 = cellCenter[1];
+
+const scalar dx3C2 = cellCenter[0] - xoC2;
+const scalar dy3C2 = cellCenter[1] - yoC2;
+const vector rC2(dx3C2,dy3C2,0);
+const scalar dx4C2 = cellCenter[0] - xo4C2;
+const scalar dy4C2 = cellCenter[1] - yo4C2;
+const vector r4C2(dx4C2,dy4C2,0);
+const scalar dx5C2 = cellCenter[0] - xo5C2;
+const scalar dy5C2 = cellCenter[1] - yo5C2;
+const vector r5C2(dx5C2,dy5C2,0);
+const scalar dx6C2 = cellCenter[0] - xo6C2;
+const scalar dy6C2 = cellCenter[1] - yo6C2;
+const vector r6C2(dx6C2,dy6C2,0);
+const scalar dx7C2 = cellCenter[0] - xo7C2;
+const scalar dy7C2 = cellCenter[1] - yo7C2;
+const vector r7C2(dx7C2,dy7C2,0);
+const scalar dx8C2 = cellCenter[0] - xo8C2;
+const scalar dy8C2 = cellCenter[1] - yo8C2;
+const vector r8C2(dx8C2,dy8C2,0);
+const scalar dx9C2 = cellCenter[0] - xo9C2;
+const scalar dy9C2 = cellCenter[1] - yo9C2;
+const vector r9C2(dx9C2,dy9C2,0);
+const scalar dx10C2 = cellCenter[0] - xo10C2;
+const scalar dy10C2 = cellCenter[1] - yo10C2;
+const vector r10C2(dx10C2,dy10C2,0);
+
+
+//Third row of turbines
+//const vector& cellCenter = mesh.C()[cellI];
+const scalar dxC3 = cellCenter[0];
+const scalar dyC3 = cellCenter[1];
+
+const scalar dx1C3 = cellCenter[0];
+const scalar dy1C3 = cellCenter[1];
+const scalar dx11C3 = cellCenter[0];
+const scalar dy11C3 = cellCenter[1];
+const scalar dx12C3 = cellCenter[0];
+const scalar dy12C3 = cellCenter[1];
+const scalar dx13C3 = cellCenter[0];
+const scalar dy13C3 = cellCenter[1];
+
+const scalar dx2C3 = cellCenter[0];
+const scalar dy2C3 = cellCenter[1];
+const scalar dx21C3 = cellCenter[0];
+const scalar dy21C3 = cellCenter[1];
+const scalar dx22C3 = cellCenter[0];
+const scalar dy22C3 = cellCenter[1];
+const scalar dx23C3 = cellCenter[0];
+const scalar dy23C3 = cellCenter[1];
+
+const scalar dx3C3 = cellCenter[0] - xoC3;
+const scalar dy3C3 = cellCenter[1] - yoC3;
+const vector rC3(dx3C3,dy3C3,0);
+const scalar dx4C3 = cellCenter[0] - xo4C3;
+const scalar dy4C3 = cellCenter[1] - yo4C3;
+const vector r4C3(dx4C3,dy4C3,0);
+const scalar dx5C3 = cellCenter[0] - xo5C3;
+const scalar dy5C3 = cellCenter[1] - yo5C3;
+const vector r5C3(dx5C3,dy5C3,0);
+const scalar dx6C3 = cellCenter[0] - xo6C3;
+const scalar dy6C3 = cellCenter[1] - yo6C3;
+const vector r6C3(dx6C3,dy6C3,0);
+const scalar dx7C3 = cellCenter[0] - xo7C3;
+const scalar dy7C3 = cellCenter[1] - yo7C3;
+const vector r7C3(dx7C3,dy7C3,0);
+const scalar dx8C3 = cellCenter[0] - xo8C3;
+const scalar dy8C3 = cellCenter[1] - yo8C3;
+const vector r8C3(dx8C3,dy8C3,0);
+const scalar dx9C3 = cellCenter[0] - xo9C3;
+const scalar dy9C3 = cellCenter[1] - yo9C3;
+const vector r9C3(dx9C3,dy9C3,0);
+const scalar dx10C3 = cellCenter[0] - xo10C3;
+const scalar dy10C3 = cellCenter[1] - yo10C3;
+const vector r10C3(dx10C3,dy10C3,0);
+
+// Fourth row of turbines
+//const vector& cellCenter = mesh.C()[cellI];
+const scalar dxC4 = cellCenter[0];
+const scalar dyC4 = cellCenter[1];
+
+const scalar dx1C4 = cellCenter[0];
+const scalar dy1C4 = cellCenter[1];
+const scalar dx11C4 = cellCenter[0];
+const scalar dy11C4 = cellCenter[1];
+const scalar dx12C4 = cellCenter[0];
+const scalar dy12C4 = cellCenter[1];
+const scalar dx13C4 = cellCenter[0];
+const scalar dy13C4 = cellCenter[1];
+
+const scalar dx2C4 = cellCenter[0];
+const scalar dy2C4 = cellCenter[1];
+const scalar dx21C4 = cellCenter[0];
+const scalar dy21C4 = cellCenter[1];
+const scalar dx22C4 = cellCenter[0];
+const scalar dy22C4 = cellCenter[1];
+const scalar dx23C4 = cellCenter[0];
+const scalar dy23C4 = cellCenter[1];
+
+const scalar dx3C4 = cellCenter[0] - xoC4;
+const scalar dy3C4 = cellCenter[1] - yoC4;
+const vector rC4(dx3C4,dy3C4,0);
+const scalar dx4C4 = cellCenter[0] - xo4C4;
+const scalar dy4C4 = cellCenter[1] - yo4C4;
+const vector r4C4(dx4C4,dy4C4,0);
+const scalar dx5C4 = cellCenter[0] - xo5C4;
+const scalar dy5C4 = cellCenter[1] - yo5C4;
+const vector r5C4(dx5C4,dy5C4,0);
+const scalar dx6C4 = cellCenter[0] - xo6C4;
+const scalar dy6C4 = cellCenter[1] - yo6C4;
+const vector r6C4(dx6C4,dy6C4,0);
+const scalar dx7C4 = cellCenter[0] - xo7C4;
+const scalar dy7C4 = cellCenter[1] - yo7C4;
+const vector r7C4(dx7C4,dy7C4,0);
+const scalar dx8C4 = cellCenter[0] - xo8C4;
+const scalar dy8C4 = cellCenter[1] - yo8C4;
+const vector r8C4(dx8C4,dy8C4,0);
+const scalar dx9C4 = cellCenter[0] - xo9C4;
+const scalar dy9C4 = cellCenter[1] - yo9C4;
+const vector r9C4(dx9C4,dy9C4,0);
+const scalar dx10C4 = cellCenter[0] - xo10C4;
+const scalar dy10C4 = cellCenter[1] - yo10C4;
+const vector r10C4(dx10C4,dy10C4,0);
+
+//Fifth column of turbines
+
+//const vector& cellCenter = mesh.C()[cellI];
+const scalar dxC5 = cellCenter[0];
+const scalar dyC5 = cellCenter[1];
+
+const scalar dx1C5 = cellCenter[0];
+const scalar dy1C5 = cellCenter[1];
+const scalar dx11C5 = cellCenter[0];
+const scalar dy11C5 = cellCenter[1];
+const scalar dx12C5 = cellCenter[0];
+const scalar dy12C5 = cellCenter[1];
+const scalar dx13C5 = cellCenter[0];
+const scalar dy13C5 = cellCenter[1];
+
+const scalar dx2C5 = cellCenter[0];
+const scalar dy2C5 = cellCenter[1];
+const scalar dx21C5 = cellCenter[0];
+const scalar dy21C5 = cellCenter[1];
+const scalar dx22C5 = cellCenter[0];
+const scalar dy22C5 = cellCenter[1];
+const scalar dx23C5 = cellCenter[0];
+const scalar dy23C5 = cellCenter[1];
+
+const scalar dx3C5 = cellCenter[0] - xoC5;
+const scalar dy3C5 = cellCenter[1] - yoC5;
+const vector rC5(dx3C5,dy3C5,0);
+const scalar dx4C5 = cellCenter[0] - xo4C5;
+const scalar dy4C5 = cellCenter[1] - yo4C5;
+const vector r4C5(dx4C5,dy4C5,0);
+const scalar dx5C5 = cellCenter[0] - xo5C5;
+const scalar dy5C5 = cellCenter[1] - yo5C5;
+const vector r5C5(dx5C5,dy5C5,0);
+const scalar dx6C5 = cellCenter[0] - xo6C5;
+const scalar dy6C5 = cellCenter[1] - yo6C5;
+const vector r6C5(dx6C5,dy6C5,0);
+const scalar dx7C5 = cellCenter[0] - xo7C5;
+const scalar dy7C5 = cellCenter[1] - yo7C5;
+const vector r7C5(dx7C5,dy7C5,0);
+const scalar dx8C5 = cellCenter[0] - xo8C5;
+const scalar dy8C5 = cellCenter[1] - yo8C5;
+const vector r8C5(dx8C5,dy8C5,0);
+const scalar dx9C5 = cellCenter[0] - xo9C5;
+const scalar dy9C5 = cellCenter[1] - yo9C5;
+const vector r9C5(dx9C5,dy9C5,0);
+const scalar dx10C5 = cellCenter[0] - xo10C5;
+const scalar dy10C5 = cellCenter[1] - yo10C5;
+const vector r10C5(dx10C5,dy10C5,0);
+
+//First row of Turbines
+// First  row
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(mag(rC1) < tipRadiusC1) &&
+(mag(rC1) > hubRadiusC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(mag(r4C1) < tipRadius4C1) &&
+(mag(r4C1) > hubRadius4C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(mag(r5C1) < tipRadius5C1) &&
+(mag(r5C1) > hubRadius5C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(mag(r6C1) < tipRadius6C1) &&
+(mag(r6C1) > hubRadius6C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(mag(r7C1) < tipRadius7C1) &&
+(mag(r7C1) > hubRadius7C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(mag(r8C1) < tipRadius8C1) &&
+(mag(r8C1) > hubRadius8C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(mag(r9C1) < tipRadius9C1) &&
+(mag(r9C1) > hubRadius9C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(mag(r10C1) < tipRadius10C1) &&
+(mag(r10C1) > hubRadius10C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(dxC1 > xminC1) &&
+(dxC1 < xmaxC1) &&
+(dyC1 < ymaxC1) &&
+(dyC1 > yminC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(dx1C1 > xmin1C1) &&
+(dx1C1 < xmax1C1) &&
+(dy1C1 < ymax1C1) &&
+(dy1C1 > ymin1C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(dx11C1 > xmin11C1) &&
+(dx11C1 < xmax11C1) &&
+(dy11C1 < ymax11C1) &&
+(dy11C1 > ymin11C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(dx12C1 > xmin12C1) &&
+(dx12C1 < xmax12C1) &&
+(dy12C1 < ymax12C1) &&
+(dy12C1 > ymin12C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(dx13C1 > xmin13C1) &&
+(dx13C1 < xmax13C1) &&
+(dy13C1 < ymax13C1) &&
+(dy13C1 > ymin13C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(dx2C1 > xmin2C1) &&
+(dx2C1 < xmax2C1) &&
+(dy2C1 < ymax2C1) &&
+(dy2C1 > ymin2C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(dx21C1 > xmin21C1) &&
+(dx21C1 < xmax21C1) &&
+(dy21C1 < ymax21C1) &&
+(dy21C1 > ymin21C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(dx22C1 > xmin22C1) &&
+(dx22C1 < xmax22C1) &&
+(dy22C1 < ymax22C1) &&
+(dy22C1 > ymin22C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR1C1) &&
+(cellCenter[2] > zminR1C1) &&
+(dx23C1 > xmin23C1) &&
+(dx23C1 < xmax23C1) &&
+(dy23C1 < ymax23C1) &&
+(dy23C1 > ymin23C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+
+//2nd row
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(mag(rC1) < tipRadiusC1) &&
+(mag(rC1) > hubRadiusC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(mag(r4C1) < tipRadius4C1) &&
+(mag(r4C1) > hubRadius4C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(mag(r5C1) < tipRadius5C1) &&
+(mag(r5C1) > hubRadius5C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(mag(r6C1) < tipRadius6C1) &&
+(mag(r6C1) > hubRadius6C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(mag(r7C1) < tipRadius7C1) &&
+(mag(r7C1) > hubRadius7C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(mag(r8C1) < tipRadius8C1) &&
+(mag(r8C1) > hubRadius8C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(mag(r9C1) < tipRadius9C1) &&
+(mag(r9C1) > hubRadius9C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(mag(r10C1) < tipRadius10C1) &&
+(mag(r10C1) > hubRadius10C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(dxC1 > xminC1) &&
+(dxC1 < xmaxC1) &&
+(dyC1 < ymaxC1) &&
+(dyC1 > yminC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(dx1C1 > xmin1C1) &&
+(dx1C1 < xmax1C1) &&
+(dy1C1 < ymax1C1) &&
+(dy1C1 > ymin1C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(dx11C1 > xmin11C1) &&
+(dx11C1 < xmax11C1) &&
+(dy11C1 < ymax11C1) &&
+(dy11C1 > ymin11C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(dx12C1 > xmin12C1) &&
+(dx12C1 < xmax12C1) &&
+(dy12C1 < ymax12C1) &&
+(dy12C1 > ymin12C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(dx13C1 > xmin13C1) &&
+(dx13C1 < xmax13C1) &&
+(dy13C1 < ymax13C1) &&
+(dy13C1 > ymin13C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(dx2C1 > xmin2C1) &&
+(dx2C1 < xmax2C1) &&
+(dy2C1 < ymax2C1) &&
+(dy2C1 > ymin2C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(dx21C1 > xmin21C1) &&
+(dx21C1 < xmax21C1) &&
+(dy21C1 < ymax21C1) &&
+(dy21C1 > ymin21C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(dx22C1 > xmin22C1) &&
+(dx22C1 < xmax22C1) &&
+(dy22C1 < ymax22C1) &&
+(dy22C1 > ymin22C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR2C1) &&
+(cellCenter[2] > zminR2C1) &&
+(dx23C1 > xmin23C1) &&
+(dx23C1 < xmax23C1) &&
+(dy23C1 < ymax23C1) &&
+(dy23C1 > ymin23C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+  //third row
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(mag(rC1) < tipRadiusC1) &&
+(mag(rC1) > hubRadiusC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(mag(r4C1) < tipRadius4C1) &&
+(mag(r4C1) > hubRadius4C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(mag(r5C1) < tipRadius5C1) &&
+(mag(r5C1) > hubRadius5C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(mag(r6C1) < tipRadius6C1) &&
+(mag(r6C1) > hubRadius6C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(mag(r7C1) < tipRadius7C1) &&
+(mag(r7C1) > hubRadius7C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(mag(r8C1) < tipRadius8C1) &&
+(mag(r8C1) > hubRadius8C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(mag(r9C1) < tipRadius9C1) &&
+(mag(r9C1) > hubRadius9C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(mag(r10C1) < tipRadius10C1) &&
+(mag(r10C1) > hubRadius10C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(dxC1 > xminC1) &&
+(dxC1 < xmaxC1) &&
+(dyC1 < ymaxC1) &&
+(dyC1 > yminC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(dx1C1 > xmin1C1) &&
+(dx1C1 < xmax1C1) &&
+(dy1C1 < ymax1C1) &&
+(dy1C1 > ymin1C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(dx11C1 > xmin11C1) &&
+(dx11C1 < xmax11C1) &&
+(dy11C1 < ymax11C1) &&
+(dy11C1 > ymin11C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(dx12C1 > xmin12C1) &&
+(dx12C1 < xmax12C1) &&
+(dy12C1 < ymax12C1) &&
+(dy12C1 > ymin12C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(dx13C1 > xmin13C1) &&
+(dx13C1 < xmax13C1) &&
+(dy13C1 < ymax13C1) &&
+(dy13C1 > ymin13C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(dx2C1 > xmin2C1) &&
+(dx2C1 < xmax2C1) &&
+(dy2C1 < ymax2C1) &&
+(dy2C1 > ymin2C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(dx21C1 > xmin21C1) &&
+(dx21C1 < xmax21C1) &&
+(dy21C1 < ymax21C1) &&
+(dy21C1 > ymin21C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(dx22C1 > xmin22C1) &&
+(dx22C1 < xmax22C1) &&
+(dy22C1 < ymax22C1) &&
+(dy22C1 > ymin22C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR3C1) &&
+(cellCenter[2] > zminR3C1) &&
+(dx23C1 > xmin23C1) &&
+(dx23C1 < xmax23C1) &&
+(dy23C1 < ymax23C1) &&
+(dy23C1 > ymin23C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+
+//fourth row
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(mag(rC1) < tipRadiusC1) &&
+(mag(rC1) > hubRadiusC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(mag(r4C1) < tipRadius4C1) &&
+(mag(r4C1) > hubRadius4C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(mag(r5C1) < tipRadius5C1) &&
+(mag(r5C1) > hubRadius5C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(mag(r6C1) < tipRadius6C1) &&
+(mag(r6C1) > hubRadius6C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(mag(r7C1) < tipRadius7C1) &&
+(mag(r7C1) > hubRadius7C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(mag(r8C1) < tipRadius8C1) &&
+(mag(r8C1) > hubRadius8C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(mag(r9C1) < tipRadius9C1) &&
+(mag(r9C1) > hubRadius9C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(mag(r10C1) < tipRadius10C1) &&
+(mag(r10C1) > hubRadius10C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(dxC1 > xminC1) &&
+(dxC1 < xmaxC1) &&
+(dyC1 < ymaxC1) &&
+(dyC1 > yminC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(dx1C1 > xmin1C1) &&
+(dx1C1 < xmax1C1) &&
+(dy1C1 < ymax1C1) &&
+(dy1C1 > ymin1C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(dx11C1 > xmin11C1) &&
+(dx11C1 < xmax11C1) &&
+(dy11C1 < ymax11C1) &&
+(dy11C1 > ymin11C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(dx12C1 > xmin12C1) &&
+(dx12C1 < xmax12C1) &&
+(dy12C1 < ymax12C1) &&
+(dy12C1 > ymin12C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(dx13C1 > xmin13C1) &&
+(dx13C1 < xmax13C1) &&
+(dy13C1 < ymax13C1) &&
+(dy13C1 > ymin13C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(dx2C1 > xmin2C1) &&
+(dx2C1 < xmax2C1) &&
+(dy2C1 < ymax2C1) &&
+(dy2C1 > ymin2C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(dx21C1 > xmin21C1) &&
+(dx21C1 < xmax21C1) &&
+(dy21C1 < ymax21C1) &&
+(dy21C1 > ymin21C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(dx22C1 > xmin22C1) &&
+(dx22C1 < xmax22C1) &&
+(dy22C1 < ymax22C1) &&
+(dy22C1 > ymin22C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR4C1) &&
+(cellCenter[2] > zminR4C1) &&
+(dx23C1 > xmin23C1) &&
+(dx23C1 < xmax23C1) &&
+(dy23C1 < ymax23C1) &&
+(dy23C1 > ymin23C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+
+   // Fifth row Turbine
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(mag(rC1) < tipRadiusC1) &&
+(mag(rC1) > hubRadiusC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(mag(r4C1) < tipRadius4C1) &&
+(mag(r4C1) > hubRadius4C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(mag(r5C1) < tipRadius5C1) &&
+(mag(r5C1) > hubRadius5C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(mag(r6C1) < tipRadius6C1) &&
+(mag(r6C1) > hubRadius6C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(mag(r7C1) < tipRadius7C1) &&
+(mag(r7C1) > hubRadius7C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(mag(r8C1) < tipRadius8C1) &&
+(mag(r8C1) > hubRadius8C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(mag(r9C1) < tipRadius9C1) &&
+(mag(r9C1) > hubRadius9C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(mag(r10C1) < tipRadius10C1) &&
+(mag(r10C1) > hubRadius10C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(dxC1 > xminC1) &&
+(dxC1 < xmaxC1) &&
+(dyC1 < ymaxC1) &&
+(dyC1 > yminC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(dx1C1 > xmin1C1) &&
+(dx1C1 < xmax1C1) &&
+(dy1C1 < ymax1C1) &&
+(dy1C1 > ymin1C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(dx11C1 > xmin11C1) &&
+(dx11C1 < xmax11C1) &&
+(dy11C1 < ymax11C1) &&
+(dy11C1 > ymin11C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(dx12C1 > xmin12C1) &&
+(dx12C1 < xmax12C1) &&
+(dy12C1 < ymax12C1) &&
+(dy12C1 > ymin12C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(dx13C1 > xmin13C1) &&
+(dx13C1 < xmax13C1) &&
+(dy13C1 < ymax13C1) &&
+(dy13C1 > ymin13C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(dx2C1 > xmin2C1) &&
+(dx2C1 < xmax2C1) &&
+(dy2C1 < ymax2C1) &&
+(dy2C1 > ymin2C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(dx21C1 > xmin21C1) &&
+(dx21C1 < xmax21C1) &&
+(dy21C1 < ymax21C1) &&
+(dy21C1 > ymin21C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(dx22C1 > xmin22C1) &&
+(dx22C1 < xmax22C1) &&
+(dy22C1 < ymax22C1) &&
+(dy22C1 > ymin22C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR5C1) &&
+(cellCenter[2] > zminR5C1) &&
+(dx23C1 > xmin23C1) &&
+(dx23C1 < xmax23C1) &&
+(dy23C1 < ymax23C1) &&
+(dy23C1 > ymin23C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+
+//six row
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(mag(rC1) < tipRadiusC1) &&
+(mag(rC1) > hubRadiusC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(mag(r4C1) < tipRadius4C1) &&
+(mag(r4C1) > hubRadius4C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(mag(r5C1) < tipRadius5C1) &&
+(mag(r5C1) > hubRadius5C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(mag(r6C1) < tipRadius6C1) &&
+(mag(r6C1) > hubRadius6C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(mag(r7C1) < tipRadius7C1) &&
+(mag(r7C1) > hubRadius7C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(mag(r8C1) < tipRadius8C1) &&
+(mag(r8C1) > hubRadius8C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(mag(r9C1) < tipRadius9C1) &&
+(mag(r9C1) > hubRadius9C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(mag(r10C1) < tipRadius10C1) &&
+(mag(r10C1) > hubRadius10C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(dxC1 > xminC1) &&
+(dxC1 < xmaxC1) &&
+(dyC1 < ymaxC1) &&
+(dyC1 > yminC1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(dx1C1 > xmin1C1) &&
+(dx1C1 < xmax1C1) &&
+(dy1C1 < ymax1C1) &&
+(dy1C1 > ymin1C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(dx11C1 > xmin11C1) &&
+(dx11C1 < xmax11C1) &&
+(dy11C1 < ymax11C1) &&
+(dy11C1 > ymin11C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(dx12C1 > xmin12C1) &&
+(dx12C1 < xmax12C1) &&
+(dy12C1 < ymax12C1) &&
+(dy12C1 > ymin12C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(dx13C1 > xmin13C1) &&
+(dx13C1 < xmax13C1) &&
+(dy13C1 < ymax13C1) &&
+(dy13C1 > ymin13C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(dx2C1 > xmin2C1) &&
+(dx2C1 < xmax2C1) &&
+(dy2C1 < ymax2C1) &&
+(dy2C1 > ymin2C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(dx21C1 > xmin21C1) &&
+(dx21C1 < xmax21C1) &&
+(dy21C1 < ymax21C1) &&
+(dy21C1 > ymin21C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(dx22C1 > xmin22C1) &&
+(dx22C1 < xmax22C1) &&
+(dy22C1 < ymax22C1) &&
+(dy22C1 > ymin22C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR6C1) &&
+(cellCenter[2] > zminR6C1) &&
+(dx23C1 > xmin23C1) &&
+(dx23C1 < xmax23C1) &&
+(dy23C1 < ymax23C1) &&
+(dy23C1 > ymin23C1)) {
+++numInside;
+totalVolume1 += mesh.V()[cellI];
+bodyForce1[cellI] = unitVector2;
+}
+
+
+
+//second column of turbines
+
+//1st row
+
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(mag(rC2) < tipRadiusC2) &&
+(mag(rC2) > hubRadiusC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(mag(r4C2) < tipRadius4C2) &&
+(mag(r4C2) > hubRadius4C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(mag(r5C2) < tipRadius5C2) &&
+(mag(r5C2) > hubRadius5C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(mag(r6C2) < tipRadius6C2) &&
+(mag(r6C2) > hubRadius6C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(mag(r7C2) < tipRadius7C2) &&
+(mag(r7C2) > hubRadius7C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(mag(r8C2) < tipRadius8C2) &&
+(mag(r8C2) > hubRadius8C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(mag(r9C2) < tipRadius9C2) &&
+(mag(r9C2) > hubRadius9C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(mag(r10C2) < tipRadius10C2) &&
+(mag(r10C2) > hubRadius10C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(dxC2 > xminC2) &&
+(dxC2 < xmaxC2) &&
+(dyC2 < ymaxC2) &&
+(dyC2 > yminC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(dx1C2 > xmin1C2) &&
+(dx1C2 < xmax1C2) &&
+(dy1C2 < ymax1C2) &&
+(dy1C2 > ymin1C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(dx11C2 > xmin11C2) &&
+(dx11C2 < xmax11C2) &&
+(dy11C2 < ymax11C2) &&
+(dy11C2 > ymin11C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(dx12C2 > xmin12C2) &&
+(dx12C2 < xmax12C2) &&
+(dy12C2 < ymax12C2) &&
+(dy12C2 > ymin12C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(dx13C2 > xmin13C2) &&
+(dx13C2 < xmax13C2) &&
+(dy13C2 < ymax13C2) &&
+(dy13C2 > ymin13C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(dx2C2 > xmin2C2) &&
+(dx2C2 < xmax2C2) &&
+(dy2C2 < ymax2C2) &&
+(dy2C2 > ymin2C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(dx21C2 > xmin21C2) &&
+(dx21C2 < xmax21C2) &&
+(dy21C2 < ymax21C2) &&
+(dy21C2 > ymin21C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(dx22C2 > xmin22C2) &&
+(dx22C2 < xmax22C2) &&
+(dy22C2 < ymax22C2) &&
+(dy22C2 > ymin22C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR1C2) &&
+(cellCenter[2] > zminR1C2) &&
+(dx23C2 > xmin23C2) &&
+(dx23C2 < xmax23C2) &&
+(dy23C2 < ymax23C2) &&
+(dy23C2 > ymin23C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+
+//2nd row
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(mag(rC2) < tipRadiusC2) &&
+(mag(rC2) > hubRadiusC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(mag(r4C2) < tipRadius4C2) &&
+(mag(r4C2) > hubRadius4C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(mag(r5C2) < tipRadius5C2) &&
+(mag(r5C2) > hubRadius5C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(mag(r6C2) < tipRadius6C2) &&
+(mag(r6C2) > hubRadius6C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(mag(r7C2) < tipRadius7C2) &&
+(mag(r7C2) > hubRadius7C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(mag(r8C2) < tipRadius8C2) &&
+(mag(r8C2) > hubRadius8C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(mag(r9C2) < tipRadius9C2) &&
+(mag(r9C2) > hubRadius9C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(mag(r10C2) < tipRadius10C2) &&
+(mag(r10C2) > hubRadius10C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(dxC2 > xminC2) &&
+(dxC2 < xmaxC2) &&
+(dyC2 < ymaxC2) &&
+(dyC2 > yminC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(dx1C2 > xmin1C2) &&
+(dx1C2 < xmax1C2) &&
+(dy1C2 < ymax1C2) &&
+(dy1C2 > ymin1C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(dx11C2 > xmin11C2) &&
+(dx11C2 < xmax11C2) &&
+(dy11C2 < ymax11C2) &&
+(dy11C2 > ymin11C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(dx12C2 > xmin12C2) &&
+(dx12C2 < xmax12C2) &&
+(dy12C2 < ymax12C2) &&
+(dy12C2 > ymin12C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(dx13C2 > xmin13C2) &&
+(dx13C2 < xmax13C2) &&
+(dy13C2 < ymax13C2) &&
+(dy13C2 > ymin13C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(dx2C2 > xmin2C2) &&
+(dx2C2 < xmax2C2) &&
+(dy2C2 < ymax2C2) &&
+(dy2C2 > ymin2C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(dx21C2 > xmin21C2) &&
+(dx21C2 < xmax21C2) &&
+(dy21C2 < ymax21C2) &&
+(dy21C2 > ymin21C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(dx22C2 > xmin22C2) &&
+(dx22C2 < xmax22C2) &&
+(dy22C2 < ymax22C2) &&
+(dy22C2 > ymin22C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR2C2) &&
+(cellCenter[2] > zminR2C2) &&
+(dx23C2 > xmin23C2) &&
+(dx23C2 < xmax23C2) &&
+(dy23C2 < ymax23C2) &&
+(dy23C2 > ymin23C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+  //third row
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(mag(rC2) < tipRadiusC2) &&
+(mag(rC2) > hubRadiusC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(mag(r4C2) < tipRadius4C2) &&
+(mag(r4C2) > hubRadius4C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(mag(r5C2) < tipRadius5C2) &&
+(mag(r5C2) > hubRadius5C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(mag(r6C2) < tipRadius6C2) &&
+(mag(r6C2) > hubRadius6C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(mag(r7C2) < tipRadius7C2) &&
+(mag(r7C2) > hubRadius7C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(mag(r8C2) < tipRadius8C2) &&
+(mag(r8C2) > hubRadius8C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(mag(r9C2) < tipRadius9C2) &&
+(mag(r9C2) > hubRadius9C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(mag(r10C2) < tipRadius10C2) &&
+(mag(r10C2) > hubRadius10C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(dxC2 > xminC2) &&
+(dxC2 < xmaxC2) &&
+(dyC2 < ymaxC2) &&
+(dyC2 > yminC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(dx1C2 > xmin1C2) &&
+(dx1C2 < xmax1C2) &&
+(dy1C2 < ymax1C2) &&
+(dy1C2 > ymin1C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(dx11C2 > xmin11C2) &&
+(dx11C2 < xmax11C2) &&
+(dy11C2 < ymax11C2) &&
+(dy11C2 > ymin11C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(dx12C2 > xmin12C2) &&
+(dx12C2 < xmax12C2) &&
+(dy12C2 < ymax12C2) &&
+(dy12C2 > ymin12C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(dx13C2 > xmin13C2) &&
+(dx13C2 < xmax13C2) &&
+(dy13C2 < ymax13C2) &&
+(dy13C2 > ymin13C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(dx2C2 > xmin2C2) &&
+(dx2C2 < xmax2C2) &&
+(dy2C2 < ymax2C2) &&
+(dy2C2 > ymin2C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(dx21C2 > xmin21C2) &&
+(dx21C2 < xmax21C2) &&
+(dy21C2 < ymax21C2) &&
+(dy21C2 > ymin21C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(dx22C2 > xmin22C2) &&
+(dx22C2 < xmax22C2) &&
+(dy22C2 < ymax22C2) &&
+(dy22C2 > ymin22C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR3C2) &&
+(cellCenter[2] > zminR3C2) &&
+(dx23C2 > xmin23C2) &&
+(dx23C2 < xmax23C2) &&
+(dy23C2 < ymax23C2) &&
+(dy23C2 > ymin23C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+
+//fourth row
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(mag(rC2) < tipRadiusC2) &&
+(mag(rC2) > hubRadiusC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(mag(r4C2) < tipRadius4C2) &&
+(mag(r4C2) > hubRadius4C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(mag(r5C2) < tipRadius5C2) &&
+(mag(r5C2) > hubRadius5C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(mag(r6C2) < tipRadius6C2) &&
+(mag(r6C2) > hubRadius6C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(mag(r7C2) < tipRadius7C2) &&
+(mag(r7C2) > hubRadius7C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(mag(r8C2) < tipRadius8C2) &&
+(mag(r8C2) > hubRadius8C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(mag(r9C2) < tipRadius9C2) &&
+(mag(r9C2) > hubRadius9C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(mag(r10C2) < tipRadius10C2) &&
+(mag(r10C2) > hubRadius10C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(dxC2 > xminC2) &&
+(dxC2 < xmaxC2) &&
+(dyC2 < ymaxC2) &&
+(dyC2 > yminC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(dx1C2 > xmin1C2) &&
+(dx1C2 < xmax1C2) &&
+(dy1C2 < ymax1C2) &&
+(dy1C2 > ymin1C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(dx11C2 > xmin11C2) &&
+(dx11C2 < xmax11C2) &&
+(dy11C2 < ymax11C2) &&
+(dy11C2 > ymin11C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(dx12C2 > xmin12C2) &&
+(dx12C2 < xmax12C2) &&
+(dy12C2 < ymax12C2) &&
+(dy12C2 > ymin12C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(dx13C2 > xmin13C2) &&
+(dx13C2 < xmax13C2) &&
+(dy13C2 < ymax13C2) &&
+(dy13C2 > ymin13C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(dx2C2 > xmin2C2) &&
+(dx2C2 < xmax2C2) &&
+(dy2C2 < ymax2C2) &&
+(dy2C2 > ymin2C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(dx21C2 > xmin21C2) &&
+(dx21C2 < xmax21C2) &&
+(dy21C2 < ymax21C2) &&
+(dy21C2 > ymin21C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(dx22C2 > xmin22C2) &&
+(dx22C2 < xmax22C2) &&
+(dy22C2 < ymax22C2) &&
+(dy22C2 > ymin22C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR4C2) &&
+(cellCenter[2] > zminR4C2) &&
+(dx23C2 > xmin23C2) &&
+(dx23C2 < xmax23C2) &&
+(dy23C2 < ymax23C2) &&
+(dy23C2 > ymin23C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+
+   // Fifth row Turbine
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(mag(rC2) < tipRadiusC2) &&
+(mag(rC2) > hubRadiusC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(mag(r4C2) < tipRadius4C2) &&
+(mag(r4C2) > hubRadius4C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(mag(r5C2) < tipRadius5C2) &&
+(mag(r5C2) > hubRadius5C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(mag(r6C2) < tipRadius6C2) &&
+(mag(r6C2) > hubRadius6C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(mag(r7C2) < tipRadius7C2) &&
+(mag(r7C2) > hubRadius7C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(mag(r8C2) < tipRadius8C2) &&
+(mag(r8C2) > hubRadius8C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(mag(r9C2) < tipRadius9C2) &&
+(mag(r9C2) > hubRadius9C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(mag(r10C2) < tipRadius10C2) &&
+(mag(r10C2) > hubRadius10C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(dxC2 > xminC2) &&
+(dxC2 < xmaxC2) &&
+(dyC2 < ymaxC2) &&
+(dyC2 > yminC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(dx1C2 > xmin1C2) &&
+(dx1C2 < xmax1C2) &&
+(dy1C2 < ymax1C2) &&
+(dy1C2 > ymin1C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(dx11C2 > xmin11C2) &&
+(dx11C2 < xmax11C2) &&
+(dy11C2 < ymax11C2) &&
+(dy11C2 > ymin11C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(dx12C2 > xmin12C2) &&
+(dx12C2 < xmax12C2) &&
+(dy12C2 < ymax12C2) &&
+(dy12C2 > ymin12C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(dx13C2 > xmin13C2) &&
+(dx13C2 < xmax13C2) &&
+(dy13C2 < ymax13C2) &&
+(dy13C2 > ymin13C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(dx2C2 > xmin2C2) &&
+(dx2C2 < xmax2C2) &&
+(dy2C2 < ymax2C2) &&
+(dy2C2 > ymin2C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(dx21C2 > xmin21C2) &&
+(dx21C2 < xmax21C2) &&
+(dy21C2 < ymax21C2) &&
+(dy21C2 > ymin21C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(dx22C2 > xmin22C2) &&
+(dx22C2 < xmax22C2) &&
+(dy22C2 < ymax22C2) &&
+(dy22C2 > ymin22C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR5C2) &&
+(cellCenter[2] > zminR5C2) &&
+(dx23C2 > xmin23C2) &&
+(dx23C2 < xmax23C2) &&
+(dy23C2 < ymax23C2) &&
+(dy23C2 > ymin23C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+
+//six row
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(mag(rC2) < tipRadiusC2) &&
+(mag(rC2) > hubRadiusC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(mag(r4C2) < tipRadius4C2) &&
+(mag(r4C2) > hubRadius4C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(mag(r5C2) < tipRadius5C2) &&
+(mag(r5C2) > hubRadius5C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(mag(r6C2) < tipRadius6C2) &&
+(mag(r6C2) > hubRadius6C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(mag(r7C2) < tipRadius7C2) &&
+(mag(r7C2) > hubRadius7C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(mag(r8C2) < tipRadius8C2) &&
+(mag(r8C2) > hubRadius8C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(mag(r9C2) < tipRadius9C2) &&
+(mag(r9C2) > hubRadius9C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(mag(r10C2) < tipRadius10C2) &&
+(mag(r10C2) > hubRadius10C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(dxC2 > xminC2) &&
+(dxC2 < xmaxC2) &&
+(dyC2 < ymaxC2) &&
+(dyC2 > yminC2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(dx1C2 > xmin1C2) &&
+(dx1C2 < xmax1C2) &&
+(dy1C2 < ymax1C2) &&
+(dy1C2 > ymin1C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(dx11C2 > xmin11C2) &&
+(dx11C2 < xmax11C2) &&
+(dy11C2 < ymax11C2) &&
+(dy11C2 > ymin11C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(dx12C2 > xmin12C2) &&
+(dx12C2 < xmax12C2) &&
+(dy12C2 < ymax12C2) &&
+(dy12C2 > ymin12C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(dx13C2 > xmin13C2) &&
+(dx13C2 < xmax13C2) &&
+(dy13C2 < ymax13C2) &&
+(dy13C2 > ymin13C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(dx2C2 > xmin2C2) &&
+(dx2C2 < xmax2C2) &&
+(dy2C2 < ymax2C2) &&
+(dy2C2 > ymin2C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(dx21C2 > xmin21C2) &&
+(dx21C2 < xmax21C2) &&
+(dy21C2 < ymax21C2) &&
+(dy21C2 > ymin21C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(dx22C2 > xmin22C2) &&
+(dx22C2 < xmax22C2) &&
+(dy22C2 < ymax22C2) &&
+(dy22C2 > ymin22C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR6C2) &&
+(cellCenter[2] > zminR6C2) &&
+(dx23C2 > xmin23C2) &&
+(dx23C2 < xmax23C2) &&
+(dy23C2 < ymax23C2) &&
+(dy23C2 > ymin23C2)) {
+++numInside;
+totalVolume2 += mesh.V()[cellI];
+bodyForce2[cellI] = unitVector2;
+}
+
+//3rd column of turbines
+
+//1st row
+
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(mag(rC3) < tipRadiusC3) &&
+(mag(rC3) > hubRadiusC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(mag(r4C3) < tipRadius4C3) &&
+(mag(r4C3) > hubRadius4C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(mag(r5C3) < tipRadius5C3) &&
+(mag(r5C3) > hubRadius5C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(mag(r6C3) < tipRadius6C3) &&
+(mag(r6C3) > hubRadius6C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(mag(r7C3) < tipRadius7C3) &&
+(mag(r7C3) > hubRadius7C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(mag(r8C3) < tipRadius8C3) &&
+(mag(r8C3) > hubRadius8C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(mag(r9C2) < tipRadius9C3) &&
+(mag(r9C2) > hubRadius9C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(mag(r10C3) < tipRadius10C3) &&
+(mag(r10C3) > hubRadius10C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(dxC3 > xminC3) &&
+(dxC3 < xmaxC3) &&
+(dyC3 < ymaxC3) &&
+(dyC3 > yminC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(dx1C3 > xmin1C3) &&
+(dx1C3 < xmax1C3) &&
+(dy1C3 < ymax1C3) &&
+(dy1C3 > ymin1C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(dx11C3 > xmin11C3) &&
+(dx11C3 < xmax11C3) &&
+(dy11C3 < ymax11C3) &&
+(dy11C3 > ymin11C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(dx12C3 > xmin12C3) &&
+(dx12C3 < xmax12C3) &&
+(dy12C3 < ymax12C3) &&
+(dy12C3 > ymin12C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(dx13C3 > xmin13C3) &&
+(dx13C3 < xmax13C3) &&
+(dy13C3 < ymax13C3) &&
+(dy13C3 > ymin13C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(dx2C3 > xmin2C3) &&
+(dx2C3 < xmax2C3) &&
+(dy2C3 < ymax2C3) &&
+(dy2C3 > ymin2C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(dx21C3 > xmin21C3) &&
+(dx21C3 < xmax21C3) &&
+(dy21C3 < ymax21C3) &&
+(dy21C3 > ymin21C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(dx22C3 > xmin22C3) &&
+(dx22C3 < xmax22C3) &&
+(dy22C3 < ymax22C3) &&
+(dy22C3 > ymin22C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR1C3) &&
+(cellCenter[2] > zminR1C3) &&
+(dx23C3 > xmin23C3) &&
+(dx23C3 < xmax23C3) &&
+(dy23C3 < ymax23C3) &&
+(dy23C3 > ymin23C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+
+//2nd row
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(mag(rC3) < tipRadiusC3) &&
+(mag(rC3) > hubRadiusC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(mag(r4C3) < tipRadius4C3) &&
+(mag(r4C3) > hubRadius4C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(mag(r5C3) < tipRadius5C3) &&
+(mag(r5C3) > hubRadius5C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(mag(r6C3) < tipRadius6C3) &&
+(mag(r6C3) > hubRadius6C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(mag(r7C3) < tipRadius7C3) &&
+(mag(r7C3) > hubRadius7C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(mag(r8C3) < tipRadius8C3) &&
+(mag(r8C3) > hubRadius8C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(mag(r9C3) < tipRadius9C3) &&
+(mag(r9C3) > hubRadius9C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(mag(r10C3) < tipRadius10C3) &&
+(mag(r10C3) > hubRadius10C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(dxC3 > xminC3) &&
+(dxC3 < xmaxC3) &&
+(dyC3 < ymaxC3) &&
+(dyC3 > yminC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(dx1C3 > xmin1C3) &&
+(dx1C3 < xmax1C3) &&
+(dy1C3 < ymax1C3) &&
+(dy1C3 > ymin1C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(dx11C3 > xmin11C3) &&
+(dx11C3 < xmax11C3) &&
+(dy11C3 < ymax11C3) &&
+(dy11C3 > ymin11C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(dx12C3 > xmin12C3) &&
+(dx12C3 < xmax12C3) &&
+(dy12C3 < ymax12C3) &&
+(dy12C3 > ymin12C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(dx13C3 > xmin13C3) &&
+(dx13C3 < xmax13C3) &&
+(dy13C3 < ymax13C3) &&
+(dy13C3 > ymin13C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(dx2C3 > xmin2C3) &&
+(dx2C3 < xmax2C3) &&
+(dy2C3 < ymax2C3) &&
+(dy2C3 > ymin2C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(dx21C3 > xmin21C3) &&
+(dx21C3 < xmax21C3) &&
+(dy21C3 < ymax21C3) &&
+(dy21C3 > ymin21C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(dx22C3 > xmin22C3) &&
+(dx22C3 < xmax22C3) &&
+(dy22C3 < ymax22C3) &&
+(dy22C3 > ymin22C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR2C3) &&
+(cellCenter[2] > zminR2C3) &&
+(dx23C3 > xmin23C3) &&
+(dx23C3 < xmax23C3) &&
+(dy23C3 < ymax23C3) &&
+(dy23C3 > ymin23C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+  //third row
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(mag(rC3) < tipRadiusC3) &&
+(mag(rC3) > hubRadiusC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(mag(r4C3) < tipRadius4C3) &&
+(mag(r4C3) > hubRadius4C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(mag(r5C3) < tipRadius5C3) &&
+(mag(r5C3) > hubRadius5C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(mag(r6C3) < tipRadius6C3) &&
+(mag(r6C3) > hubRadius6C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(mag(r7C3) < tipRadius7C3) &&
+(mag(r7C3) > hubRadius7C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(mag(r8C3) < tipRadius8C3) &&
+(mag(r8C3) > hubRadius8C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(mag(r9C3) < tipRadius9C3) &&
+(mag(r9C3) > hubRadius9C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(mag(r10C3) < tipRadius10C3) &&
+(mag(r10C3) > hubRadius10C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(dxC3 > xminC3) &&
+(dxC3 < xmaxC3) &&
+(dyC3 < ymaxC3) &&
+(dyC3 > yminC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(dx1C3 > xmin1C3) &&
+(dx1C3 < xmax1C3) &&
+(dy1C3 < ymax1C3) &&
+(dy1C3 > ymin1C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(dx11C3 > xmin11C3) &&
+(dx11C3 < xmax11C3) &&
+(dy11C3 < ymax11C3) &&
+(dy11C3 > ymin11C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(dx12C3 > xmin12C3) &&
+(dx12C3 < xmax12C3) &&
+(dy12C3 < ymax12C3) &&
+(dy12C3 > ymin12C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(dx13C3 > xmin13C3) &&
+(dx13C3 < xmax13C3) &&
+(dy13C3 < ymax13C3) &&
+(dy13C3 > ymin13C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(dx2C3 > xmin2C3) &&
+(dx2C3 < xmax2C3) &&
+(dy2C3 < ymax2C3) &&
+(dy2C3 > ymin2C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(dx21C3 > xmin21C3) &&
+(dx21C3 < xmax21C3) &&
+(dy21C3 < ymax21C3) &&
+(dy21C3 > ymin21C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(dx22C3 > xmin22C3) &&
+(dx22C3 < xmax22C3) &&
+(dy22C3 < ymax22C3) &&
+(dy22C3 > ymin22C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR3C3) &&
+(cellCenter[2] > zminR3C3) &&
+(dx23C3 > xmin23C3) &&
+(dx23C3 < xmax23C3) &&
+(dy23C3 < ymax23C3) &&
+(dy23C3 > ymin23C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+
+//fourth row
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(mag(rC3) < tipRadiusC3) &&
+(mag(rC3) > hubRadiusC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(mag(r4C3) < tipRadius4C3) &&
+(mag(r4C3) > hubRadius4C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(mag(r5C3) < tipRadius5C3) &&
+(mag(r5C3) > hubRadius5C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(mag(r6C3) < tipRadius6C3) &&
+(mag(r6C3) > hubRadius6C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(mag(r7C3) < tipRadius7C3) &&
+(mag(r7C3) > hubRadius7C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(mag(r8C3) < tipRadius8C3) &&
+(mag(r8C3) > hubRadius8C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(mag(r9C3) < tipRadius9C3) &&
+(mag(r9C3) > hubRadius9C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(mag(r10C3) < tipRadius10C3) &&
+(mag(r10C3) > hubRadius10C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(dxC3 > xminC3) &&
+(dxC3 < xmaxC3) &&
+(dyC3 < ymaxC3) &&
+(dyC3 > yminC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(dx1C3 > xmin1C3) &&
+(dx1C3 < xmax1C3) &&
+(dy1C3 < ymax1C3) &&
+(dy1C3 > ymin1C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(dx11C3 > xmin11C3) &&
+(dx11C3 < xmax11C3) &&
+(dy11C3 < ymax11C3) &&
+(dy11C3 > ymin11C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(dx12C3 > xmin12C3) &&
+(dx12C3 < xmax12C3) &&
+(dy12C3 < ymax12C3) &&
+(dy12C3 > ymin12C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(dx13C3 > xmin13C3) &&
+(dx13C3 < xmax13C3) &&
+(dy13C3 < ymax13C3) &&
+(dy13C3 > ymin13C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(dx2C3 > xmin2C3) &&
+(dx2C3 < xmax2C3) &&
+(dy2C3 < ymax2C3) &&
+(dy2C3 > ymin2C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(dx21C3 > xmin21C3) &&
+(dx21C3 < xmax21C3) &&
+(dy21C3 < ymax21C3) &&
+(dy21C3 > ymin21C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(dx22C3 > xmin22C3) &&
+(dx22C3 < xmax22C3) &&
+(dy22C3 < ymax22C3) &&
+(dy22C3 > ymin22C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR4C3) &&
+(cellCenter[2] > zminR4C3) &&
+(dx23C3 > xmin23C3) &&
+(dx23C3 < xmax23C3) &&
+(dy23C3 < ymax23C3) &&
+(dy23C3 > ymin23C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+
+   // Fifth row Turbine
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(mag(rC3) < tipRadiusC3) &&
+(mag(rC3) > hubRadiusC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(mag(r4C3) < tipRadius4C3) &&
+(mag(r4C3) > hubRadius4C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(mag(r5C3) < tipRadius5C3) &&
+(mag(r5C3) > hubRadius5C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(mag(r6C3) < tipRadius6C3) &&
+(mag(r6C3) > hubRadius6C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(mag(r7C3) < tipRadius7C3) &&
+(mag(r7C3) > hubRadius7C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(mag(r8C3) < tipRadius8C3) &&
+(mag(r8C3) > hubRadius8C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(mag(r9C3) < tipRadius9C3) &&
+(mag(r9C3) > hubRadius9C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(mag(r10C3) < tipRadius10C3) &&
+(mag(r10C3) > hubRadius10C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(dxC3 > xminC3) &&
+(dxC3 < xmaxC3) &&
+(dyC3 < ymaxC3) &&
+(dyC3 > yminC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(dx1C3 > xmin1C3) &&
+(dx1C3 < xmax1C3) &&
+(dy1C3 < ymax1C3) &&
+(dy1C3 > ymin1C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(dx11C3 > xmin11C3) &&
+(dx11C3 < xmax11C3) &&
+(dy11C3 < ymax11C3) &&
+(dy11C3 > ymin11C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(dx12C3 > xmin12C3) &&
+(dx12C3 < xmax12C3) &&
+(dy12C3 < ymax12C3) &&
+(dy12C3 > ymin12C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(dx13C3 > xmin13C3) &&
+(dx13C3 < xmax13C3) &&
+(dy13C3 < ymax13C3) &&
+(dy13C3 > ymin13C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(dx2C3 > xmin2C3) &&
+(dx2C3 < xmax2C3) &&
+(dy2C3 < ymax2C3) &&
+(dy2C3 > ymin2C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(dx21C3 > xmin21C3) &&
+(dx21C3 < xmax21C3) &&
+(dy21C3 < ymax21C3) &&
+(dy21C3 > ymin21C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(dx22C3 > xmin22C3) &&
+(dx22C3 < xmax22C3) &&
+(dy22C3 < ymax22C3) &&
+(dy22C3 > ymin22C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR5C3) &&
+(cellCenter[2] > zminR5C3) &&
+(dx23C3 > xmin23C3) &&
+(dx23C3 < xmax23C3) &&
+(dy23C3 < ymax23C3) &&
+(dy23C3 > ymin23C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+
+//six row
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(mag(rC3) < tipRadiusC3) &&
+(mag(rC3) > hubRadiusC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector3;
+}
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(mag(r4C3) < tipRadius4C3) &&
+(mag(r4C3) > hubRadius4C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector4;
+}
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(mag(r5C3) < tipRadius5C3) &&
+(mag(r5C3) > hubRadius5C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector5;
+}
+
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(mag(r6C3) < tipRadius6C3) &&
+(mag(r6C3) > hubRadius6C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector6;
+}
+
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(mag(r7C3) < tipRadius7C3) &&
+(mag(r7C3) > hubRadius7C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector7;
+}
+
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(mag(r8C3) < tipRadius8C3) &&
+(mag(r8C3) > hubRadius8C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector8;
+}
+
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(mag(r9C3) < tipRadius9C3) &&
+(mag(r9C3) > hubRadius9C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector9;
+}
+
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(mag(r10C3) < tipRadius10C3) &&
+(mag(r10C3) > hubRadius10C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector10;
+}
+
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(dxC3 > xminC3) &&
+(dxC3 < xmaxC3) &&
+(dyC3 < ymaxC3) &&
+(dyC3 > yminC3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector;
+}
+
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(dx1C3 > xmin1C3) &&
+(dx1C3 < xmax1C3) &&
+(dy1C3 < ymax1C3) &&
+(dy1C3 > ymin1C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(dx11C3 > xmin11C3) &&
+(dx11C3 < xmax11C3) &&
+(dy11C3 < ymax11C3) &&
+(dy11C3 > ymin11C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(dx12C3 > xmin12C3) &&
+(dx12C3 < xmax12C3) &&
+(dy12C3 < ymax12C3) &&
+(dy12C3 > ymin12C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(dx13C3 > xmin13C3) &&
+(dx13C3 < xmax13C3) &&
+(dy13C3 < ymax13C3) &&
+(dy13C3 > ymin13C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector1;
+}
+
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(dx2C3 > xmin2C3) &&
+(dx2C3 < xmax2C3) &&
+(dy2C3 < ymax2C3) &&
+(dy2C3 > ymin2C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(dx21C3 > xmin21C3) &&
+(dx21C3 < xmax21C3) &&
+(dy21C3 < ymax21C3) &&
+(dy21C3 > ymin21C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(dx22C3 > xmin22C3) &&
+(dx22C3 < xmax22C3) &&
+(dy22C3 < ymax22C3) &&
+(dy22C3 > ymin22C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+if ((cellCenter[2] < zmaxR6C3) &&
+(cellCenter[2] > zminR6C3) &&
+(dx23C3 > xmin23C3) &&
+(dx23C3 < xmax23C3) &&
+(dy23C3 < ymax23C3) &&
+(dy23C3 > ymin23C3)) {
+++numInside;
+totalVolume3 += mesh.V()[cellI];
+bodyForce3[cellI] = unitVector2;
+}
+
+
+
+}
+
+Info << "First row turbines total volume = " << totalVolume1 << endl;
+Info << numInside << " of " << numCells << " cells are inside" << endl;
+Info << "second row turbines total volume = " << totalVolume2 << endl;
+Info << numInside << " of " << numCells << " cells are inside" << endl;
+Info << "Thrid row turbines total volume = " << totalVolume3 << endl;
+Info << numInside << " of " << numCells << " cells are inside" << endl;
+
+/*Info << "Fourth row turbines total volume = " << totalVolume4 << endl;
+Info << numInside << " of " << numCells << " cells are inside" << endl;
+Info << "Fifth row turbines total volume = " << totalVolume5 << endl;
+Info << numInside << " of " << numCells << " cells are inside" << endl;*/
+
+//Info << "ring total volume = " << ringTotalVolume << endl;
+//Info << ringNumInside << " of " << ringNumCells << " cells are inside" << endl;
+
+// Set the body force magnitude
+if (totalVolume1 > 0) {
+bodyForce1 *= magnitude1/totalVolume1;
+}
+
+if (totalVolume2 > 0) {
+bodyForce2 *= magnitude2/totalVolume2;
+}
+
+if (totalVolume3 > 0) {
+bodyForce3 *= magnitude3/totalVolume3;
+}
+
+/*if (totalVolume4 > 0) {
+bodyForce4 *= magnitude4/totalVolume4;
+}
+
+if (totalVolume5 > 0) {
+bodyForce5 *= magnitude5/totalVolume5;
+}*/
+
+//bodyForce = bodyForce1 + bodyForce2 + bodyForce3;
+
+// Write the resulting field to a file
+//bodyForce.write();
+bodyForce1.write();
+bodyForce2.write();
+bodyForce3.write();
+//bodyForce4.write();
+//bodyForce5.write();
+//ringForce.write();
+
+

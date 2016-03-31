@@ -1,0 +1,4 @@
+T30InterFoam.C
+MULES.C
+
+EXE = $(FOAM_USER_APPBIN)/T30InterFoam
